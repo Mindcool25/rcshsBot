@@ -1,7 +1,8 @@
 import discord
 from discord.ext import commands
-import os
 
+f = open('token.txt')
+TOKEN = f.readline()
 
 def get_prefix(bot, message):
     # The prefix for bot commands
@@ -28,5 +29,5 @@ async def on_ready():
         f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n'
     )
 
-bot.run('TOKEN', bot=True, reconnect=True)
+bot.run(TOKEN, bot=True, reconnect=True)
 

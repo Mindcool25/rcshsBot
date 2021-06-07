@@ -128,3 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 © 2021 GitHub, Inc.
+
+# Bot Token file
+token.txt

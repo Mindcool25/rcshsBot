@@ -17,7 +17,7 @@ class BasicCog(commands.Cog):
 	)
 	# Function for ping command
 	async def ping_command(self, ctx):  # Async is used to make sure the bot is running correctly without timing issues
-		start = d.timestamp(d.now)
+		start = d.timestamp(d.now())
 		print("pinging...")
 		msg = await ctx.send(content="Pinging...")  # Sending initial message
 		await msg.edit(
@@ -28,6 +28,7 @@ class BasicCog(commands.Cog):
 	@commands.command(
 		name="echo",
 		description="Command to echo what a user puts in",
+		usage=".echo <phrase to echo>",
 		aliases=['e']
 	)
 	# Function for echo
@@ -39,3 +40,8 @@ class BasicCog(commands.Cog):
 		# Sending what the user typed back
 		msg = await ctx.send(content=userInput)
 		return
+
+
+# This needs to be at the bottom of all cog files for the cog to be added to the main bot
+def setup(bot):
+	bot.add_cog(BasicCog(bot))
