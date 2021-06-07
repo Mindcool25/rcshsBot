@@ -53,6 +53,16 @@ class BasicCog(commands.Cog):
 		msg = await ctx.send(content=userInput)
 		return
 
+	# Sends github link
+	@commands.command(
+		name="github",
+		description="Send link to the bot github",
+		usage="just do .github its not that hard",
+		aliases=['gh'])
+	async def github_command(self, ctx):
+		async ctx.send("https://github.com/Mindcool25/rcshsBot")
+	
+	
 #ALWAYS KEEP THIS HERE
 # This needs to be at the bottom of all cog files for the cog to be added to the main bot
 def setup(bot):
