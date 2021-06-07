@@ -10,6 +10,7 @@ from datetime import datetime as d
 # Write REALLY neat code and don't mess with the main.py file in the repository. 
 # Also don't mess with the commands you DON'T want to edit. 
 # Make sure your code is neat and understandable so it can be checked and your feature will be up in NO TIME!
+# If you feel like your command is better suited for another file or plan on making a series of similar/connected commands, making a new cog file like this one would be preferrable. Make sure you read the comments on this file to understand how to make your own.
 # Thank you for contributing! 
 
 
