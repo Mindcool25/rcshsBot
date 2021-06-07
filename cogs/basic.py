@@ -64,16 +64,6 @@ class BasicCog(commands.Cog):
 		# Send our github link in chat
 		msg = await ctx.send("https://github.com/Mindcool25/rcshsBot")
 		return
-
-
-	# Sends github link
-	@commands.command(
-		name="github",
-		description="Send link to the bot github",
-		usage="just do .github its not that hard",
-		aliases=['gh'])
-	async def github_command(self, ctx):
-		async ctx.send("https://github.com/Mindcool25/rcshsBot")
 	
 	
 #ALWAYS KEEP THIS HERE
