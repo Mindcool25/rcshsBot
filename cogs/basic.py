@@ -52,6 +52,19 @@ class BasicCog(commands.Cog):
 		# Sending what the user typed back
 		msg = await ctx.send(content=userInput)
 		return
+	#Basic command to show github link to the bot in chat
+	@commands.command(
+		name="github",
+		description="Command to show github link to bot",
+		usage=".github",
+		aliases=['g']
+		)	
+		#Function for github
+	async def github_command(self, ctx):
+		msg = await ctx.send("https://github.com/Mindcool25/rcshsBot")
+		return
+
+		
 
 #ALWAYS KEEP THIS HERE
 # This needs to be at the bottom of all cog files for the cog to be added to the main bot
