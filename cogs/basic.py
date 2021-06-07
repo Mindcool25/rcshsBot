@@ -1,9 +1,20 @@
-# Using cogs makes life a lot easier.
+# Using cogs makes life a lot easier!
 import discord
 from discord.ext import commands
 from datetime import datetime as d
 
 
+
+# THIS IS THE OFFICIAL BOT OF r/CSHIGHSCHOOLERS. 
+# If you have an idea for the bot, you're supposed to be editing this file.
+# Write REALLY neat code and don't mess with the main.py file in the repository. 
+# Also don't mess with the commands you DON'T want to edit. 
+# Make sure your code is neat and understandable so it can be checked and your feature will be up in NO TIME!
+# Thank you for contributing! 
+
+
+
+#COMMMANDS!
 class BasicCog(commands.Cog):
 	# Initializing cog into the bot
 	def __init__(self, bot):
@@ -41,7 +52,7 @@ class BasicCog(commands.Cog):
 		msg = await ctx.send(content=userInput)
 		return
 
-
+#ALWAYS KEEP THIS HERE
 # This needs to be at the bottom of all cog files for the cog to be added to the main bot
 def setup(bot):
 	bot.add_cog(BasicCog(bot))

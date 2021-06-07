@@ -1,6 +1,8 @@
+#IMPORTS
 import discord
 from discord.ext import commands
 
+#NOT TO BE EDITED!
 f = open('token.txt')
 TOKEN = f.readline()
 
