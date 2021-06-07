@@ -64,6 +64,18 @@ class BasicCog(commands.Cog):
 		# Send our github link in chat
 		msg = await ctx.send("https://github.com/Mindcool25/rcshsBot")
 		return
+	# Basic command to show discord invite link
+	@commands.command(
+		name="invite",
+		description="Command to show discord server invite link",
+		usage=".invite",
+		aliases=['i']
+	)	
+		# Function for invite
+	async def invite_command(self, ctx):
+		# Send our discord invite link in chat
+		msg = await ctx.send("https://discord.gg/q5S9jCgzP6")
+		return
 	
 	
 #ALWAYS KEEP THIS HERE
