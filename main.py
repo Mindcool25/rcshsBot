@@ -3,8 +3,8 @@ import discord
 from discord.ext import commands
 
 #NOT TO BE EDITED!
-f = open('token.txt')
-TOKEN = f.readline()
+with open('token.txt') as f:
+    TOKEN = f.readline()
 
 def get_prefix(bot, message):
     # The prefix for bot commands
