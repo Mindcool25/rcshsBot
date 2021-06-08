@@ -28,7 +28,7 @@ print("Loaded extensions")
 @bot.event
 async def on_ready():
     print(
-        f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n'
+        f'\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n'
     )
 
 bot.run(TOKEN, bot=True, reconnect=True)
