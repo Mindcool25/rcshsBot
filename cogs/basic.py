@@ -13,6 +13,7 @@ from datetime import datetime as d
 # If you feel like your command is better suited for another file or plan on making a series of similar/connected commands, making a new cog file like this one would be preferrable. Make sure you read the comments on this file to understand how to make your own.
 # Thank you for contributing! 
 
+invite_code = "q5S9jCgzP6"
 
 
 #COMMMANDS!
@@ -27,14 +28,12 @@ class BasicCog(commands.Cog):
 		description="Command to get how fast the bot responds to a command.",  # Description for help command
 		aliases=['p']  # This allows you to have a shorthand for a command or just call it something different
 	)
-	# Function for ping command
-	async def ping_command(self, ctx):  # Async is used to make sure the bot is running correctly without timing issues
+	async def ping_command(self, ctx):
 		start = d.timestamp(d.now())
 		print("pinging...")
 		msg = await ctx.send(content="Pinging...")  # Sending initial message
 		await msg.edit(
-			content=f'Pong!\nOne message round-trip took {(d.timestamp(d.now()) - start) * 1000}ms.')  # Editing message
-		return
+			content=f'Pong!\nOne message round-trip took {(d.timestamp(d.now()) - start) * 1000}ms.')
 
 	# Basic echo command to show how you can get input from user
 	@commands.command(
@@ -43,27 +42,19 @@ class BasicCog(commands.Cog):
 		usage=".echo <phrase to echo>",
 		aliases=['e']
 	)
-	# Function for echo
-	async def echo_command(self, ctx):
-		# Getting rid of prefix and the characters used to invoke the command
-		userInput = ctx.message.content
-		userInput = userInput[len(ctx.prefix) + len(ctx.invoked_with):]
-		userInput = userInput[1:]
-		# Sending what the user typed back
-		msg = await ctx.send(content=userInput)
-		return
-		# Basic command to show github link to the bot in chat
+	async def echo_command(self, ctx, text: str):
+		await ctx.send(text)
+		
+	# Respond with the github repo link
 	@commands.command(
 		name="github",
 		description="Command to show github link to bot",
 		usage=".github",
 		aliases=['g']
 	)	
-		# Function for github
 	async def github_command(self, ctx):
-		# Send our github link in chat
-		msg = await ctx.send("https://github.com/Mindcool25/rcshsBot")
-		return
+		await ctx.send("https://github.com/Mindcool25/rcshsBot")
+		
 	# Basic command to show discord invite link
 	@commands.command(
 		name="invite",
@@ -71,11 +62,14 @@ class BasicCog(commands.Cog):
 		usage=".invite",
 		aliases=['i']
 	)	
-		# Function for invite
 	async def invite_command(self, ctx):
 		# Send our discord invite link in chat
-		msg = await ctx.send("https://discord.gg/q5S9jCgzP6")
-		return
+		invites = await ctx.guild.invites()
+		active_codes = [i.code for i in invites]
+		if invite_code not in active_codes:
+			await ctx.send("The currently set invite code is no longer valid!")
+		else:
+			await ctx.send(f"https://discord.gg/{invite_code}")
 	
 	
 #ALWAYS KEEP THIS HERE
