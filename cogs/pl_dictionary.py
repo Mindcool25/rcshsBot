@@ -56,7 +56,7 @@ def html_to_plain(s):
     return unmark(html2text.html2text(s))
 
 #COMMMANDS!
-class BasicCog(commands.Cog):
+class Pl_dictionaryCog(commands.Cog):
     # Initializing cog into the bot
     def __init__(self, bot):
         self.bot = bot
@@ -115,4 +115,4 @@ class BasicCog(commands.Cog):
 #ALWAYS KEEP THIS HERE
 # This needs to be at the bottom of all cog files for the cog to be added to the main bot
 def setup(bot):
-    bot.add_cog(BasicCog(bot))
+    bot.add_cog(Pl_dictionaryCog(bot))
