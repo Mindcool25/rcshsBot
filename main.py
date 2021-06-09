@@ -13,7 +13,7 @@ def get_prefix(bot, message):
     return commands.when_mentioned_or(*prefixes)(bot, message)
 
 # If you make your own cog file, add it in a similar way that basic is added here, with 'cogs.<filename>'
-extensions = ['cogs.basic']
+extensions = ['cogs.basic', 'cogs.pl_dictionary']
 
 bot = commands.Bot(
     command_prefix=get_prefix, description='Bot for the r/CSHighschoolers discord server')
