@@ -2,10 +2,9 @@
 import discord
 from discord.ext import commands
 from datetime import datetime as d
-import urllib, requests, html2text, re
+import urllib, requests, html2text
 from markdown import Markdown
 from io import StringIO
-import time
 
 
 # Takes a string and removes whitespace and makes it lowercase. This is useful in comparisions that need to happen later on.
@@ -51,9 +50,6 @@ __md.stripTopLevelTags = False
 # Removes formatting from multiple text elements
 def unmark(text):
     return __md.convert(text)
-
-def html_to_mark(s):
-    return html2text.html2text(s)
 
 # Combines the the patching, unmark, and unmark_element into one easy to use html-to-plaintext converter
 def html_to_plain(s):
