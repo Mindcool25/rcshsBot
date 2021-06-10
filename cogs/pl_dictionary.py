@@ -2,14 +2,14 @@
 import discord
 from discord.ext import commands
 from datetime import datetime as d
-import urllib, requests, html2text, re
+import urllib, requests, html2text
 from markdown import Markdown
 from io import StringIO
 
 
 # Takes a string and removes whitespace and makes it lowercase. This is useful in comparisions that need to happen later on.
 def normalize_key(key): # TODO: Make this more powerful in the future, maybe with some sort of globbing.
-    return key.strip().lower()
+    return " ".join(key.strip().lower().split())
 
 # This function return a python dictionary structure that contains computer terms as keys and links to their definitions as values.
 def fetch_dictionary():
@@ -62,6 +62,8 @@ class Pl_dictionaryCog(commands.Cog):
         self.bot = bot
         # Fetching and caching the dictionary of terms from online. This is stored in a python dictionary structure, as you might expect.
         self.dict = fetch_dictionary()
+        self.what_does_mean = re.compile(r'What Does [^Explains]+ Mean?')
+        self.techopedia_explains = re.compile('Techopedia Explains .+')
 
     # Returns out a short definition of whatever term is given.
     @commands.command(
@@ -72,20 +74,24 @@ class Pl_dictionaryCog(commands.Cog):
     # Function for `define` command
     async def define_command(self, ctx):
         userInput = ctx.message.content[len(ctx.prefix) + len(ctx.invoked_with):][1:]
-        msg = ""
+        msg = "default"
+        normkey = normalize_key(userInput)
         try:
-            normkey = normalize_key(userInput)
-            page_lines = html_to_plain(fetch_page(normkey, self.dict)).split("\\n")
-            for i in range(0, len(page_lines)):
-                e = page_lines[i].lower()
-                if 'what does' in e and normkey in e:
-                    line = page_lines[i+1].strip().replace("\n", " ")
-                    if len(line) >= 2000:
-                        msg = "The definition is too long to send. Read it here: " + 'https://www.techopedia.com/definition/' + self.dict[normkey] + "."
-                    else:
-                        msg = line
+            page = " ".join(html_to_plain(fetch_page(normkey, self.dict)).replace('\n', ' ').replace('\\n', ' ').split())
+            start = 0
+            for q in range(0, len(page)):
+                if page[q:q+9] == "What Does":
+                    start = q
+            for q in range(start, len(page)):
+                if page[q:q+13] == "Advertisement":
+                    end = q
+                    break
+            msg =(page[start:end]).replace(r"\xe2\x80\x99", "'")
+            if len(msg) >= 2000:
+                msg = "The definition is too long to send. Read it here: " + 'https://www.techopedia.com/definition/' + self.dict[normkey] + "."
         except:
-            msg = "No definition found."
+            msg = f"Couldn't find a definition for {userInput}."
+
         await ctx.send(content=msg)
     # Return a longer explantion/definition of whatever term is given.
     @commands.command(
@@ -95,21 +101,24 @@ class Pl_dictionaryCog(commands.Cog):
     # Function for `explain` command
     async def explain_command(self, ctx):
         userInput = ctx.message.content[len(ctx.prefix) + len(ctx.invoked_with):][1:]
-        msg = ""
+        msg = "default"
+        normkey = normalize_key(userInput)
         try:
-            normkey = normalize_key(userInput)
-            page_lines = html_to_plain(fetch_page(normkey, self.dict)).split("\\n")
-            for i in range(0, len(page_lines)):
-                e = page_lines[i].lower()
-                if 'techopedia explains' in e and normkey in e:
-                    line = page_lines[i+1].strip().replace("\n", " ")
-                    if len(line) >= 2000:
-                        msg = "The explantion is too long to send. Read it here: " + 'https://www.techopedia.com/definition/' + self.dict[normkey] + "."
-                    else:
-                        msg = line
-
+            page = " ".join(html_to_plain(fetch_page(normkey, self.dict)).replace('\n', ' ').replace('\\n', ' ').split())
+            start = 0
+            for q in range(0, len(page)):
+                if page[q:q+19] == "Techopedia Explains":
+                    start = q
+            for q in range(start, len(page)):
+                if page[q:q+13] == "Advertisement":
+                    end = q
+                    break
+            msg =(page[start:end]).replace(r"\xe2\x80\x99", "'")
+            if len(msg) >= 2000:
+                msg = "The explanation is too long to send. Read it here: " + 'https://www.techopedia.com/definition/' + self.dict[normkey] + "."
         except:
-            msg = "No explanation found."
+            msg = f"Couldn't find an explanation for {userInput}."
+
         await ctx.send(content=msg)
 
 #ALWAYS KEEP THIS HERE
