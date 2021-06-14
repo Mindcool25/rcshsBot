@@ -53,7 +53,7 @@ class BasicCog(commands.Cog):
 		aliases=['g']
 	)	
 	async def github_command(self, ctx):
-		await ctx.send("https://github.com/Mindcool25/rcshsBot")
+		await ctx.message.reply("https://github.com/Mindcool25/rcshsBot", mention_author=True)
 		
 	# Basic command to show discord invite link
 	@commands.command(
@@ -67,9 +67,9 @@ class BasicCog(commands.Cog):
 		invites = await ctx.guild.invites()
 		active_codes = [i.code for i in invites]
 		if invite_code not in active_codes:
-			await ctx.send("The currently set invite code is no longer valid!")
+			await ctx.message.reply("The currently set invite code is no longer valid!", mention_author=True)
 		else:
-			await ctx.send(f"https://discord.gg/{invite_code}")
+			await ctx.message.reply(f"https://discord.gg/{invite_code}", mention_author=True)
 	
 	# Basic command to send a link to the associated subreddit with a reply
 	@commands.command( 
@@ -80,7 +80,7 @@ class BasicCog(commands.Cog):
     	)
     	async def subreddit_command(self, ctx):
         	# Assuming you're using the most up-to-date d.py,
-        	await ctx.message.reply("Check out the subreddit here: https://www.reddit.com/r/cshighschoolers/",mention_author=True)
+        	await ctx.message.reply("Check out the subreddit here: https://www.reddit.com/r/cshighschoolers/", mention_author=True)
 		
 #ALWAYS KEEP THIS HERE
 # This needs to be at the bottom of all cog files for the cog to be added to the main bot
