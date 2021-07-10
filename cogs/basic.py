@@ -43,8 +43,9 @@ class BasicCog(commands.Cog):
 		aliases=['e']
 	)
 	async def echo_command(self, ctx, text: str):
-		if text.startswith("@") != True:
-			await ctx.send(text)
+		if (text == "@everyone" or text == "@member"):
+			return
+		else: await ctx.send(text)
 		
 	# Respond with the github repo link
 	@commands.command(
