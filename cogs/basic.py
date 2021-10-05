@@ -1,9 +1,10 @@
 # Using cogs makes life a lot easier!
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord import voice_client
+from nextcord import file
+from nextcord.ext import commands
 from datetime import datetime as d
-
-
+import os
 
 # THIS IS THE OFFICIAL BOT OF r/CSHIGHSCHOOLERS. 
 # If you have an idea for the bot, you're supposed to be editing this file.
@@ -14,7 +15,6 @@ from datetime import datetime as d
 # Thank you for contributing! 
 
 invite_code = "q5S9jCgzP6"
-
 
 #COMMMANDS!
 class BasicCog(commands.Cog):
@@ -55,7 +55,7 @@ class BasicCog(commands.Cog):
 		aliases=['g']
 	)	
 	async def github_command(self, ctx):
-		await ctx.send("https://github.com/Mindcool25/rcshsBot")
+		await ctx.send("https://github.com/nuke886/rcshsBot")
 		
 	# Basic command to show discord invite link
 	@commands.command(
@@ -72,8 +72,7 @@ class BasicCog(commands.Cog):
 			await ctx.send("The currently set invite code is no longer valid!")
 		else:
 			await ctx.send(f"https://discord.gg/{invite_code}")
-	
-	
+
 #ALWAYS KEEP THIS HERE
 # This needs to be at the bottom of all cog files for the cog to be added to the main bot
 def setup(bot):

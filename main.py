@@ -1,6 +1,6 @@
 #IMPORTS
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 
 #NOT TO BE EDITED!
 with open('token.txt') as f:
@@ -28,8 +28,7 @@ print("Loaded extensions")
 @bot.event
 async def on_ready():
     print(
-        f'\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n'
+        f'\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {nextcord.__version__}\n'
     )
 
 bot.run(TOKEN, bot=True, reconnect=True)
-

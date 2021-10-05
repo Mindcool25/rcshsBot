@@ -1,6 +1,6 @@
 # Using cogs makes life a lot easier!
-import discord
-from discord.ext import commands
+import nextcord
+from nextcord.ext import commands
 from datetime import datetime as d
 import urllib, requests, html2text
 from markdown import Markdown
