@@ -1,7 +1,5 @@
 # Using cogs makes life a lot easier!
 import nextcord
-from nextcord import voice_client
-from nextcord import file
 from nextcord.ext import commands
 from datetime import datetime as d
 import os
@@ -14,7 +12,7 @@ import os
 # If you feel like your command is better suited for another file or plan on making a series of similar/connected commands, making a new cog file like this one would be preferrable. Make sure you read the comments on this file to understand how to make your own.
 # Thank you for contributing! 
 
-invite_code = "q5S9jCgzP6"
+invite_code = "887RFn5BPU"
 
 #COMMMANDS!
 class BasicCog(commands.Cog):
