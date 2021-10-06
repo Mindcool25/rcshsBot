@@ -42,10 +42,16 @@ class BasicCog(commands.Cog):
 		usage=".echo <phrase to echo>",
 		aliases=['e']
 	)
-	async def echo_command(self, ctx, text: str):
-		if (text == "@everyone" or text == "@member"):
+	async def echo_command(self, ctx, *text: str):
+		if ("@everyone" in text or "@members" in text or "@here" in text):
 			return
-		else: await ctx.send(text)
+		ftext = "" 
+		for i in text: 
+			if i == '.' or '!' or ',' or ';' or '?':
+				ftext += i
+			else:
+				ftext += ' ' + i 
+		await ctx.send(ftext)
 		
 	# Respond with the github repo link
 	@commands.command(
