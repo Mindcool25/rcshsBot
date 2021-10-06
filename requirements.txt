@@ -2,7 +2,7 @@ aiohttp==3.7.4.post0
 async-timeout==3.0.1
 attrs==21.2.0
 certifi==2021.5.30
-cffi @ file:///C:/Users/sr782/Downloads/cffi-1.14.6-cp310-cp310-win_amd64.whl
+cffi @ <Path>/cffi-1.14.6-cp310-cp310-win_amd64.whl
 chardet==4.0.0
 charset-normalizer==2.0.6
 discord==1.7.3
@@ -19,5 +19,5 @@ requests==2.26.0
 six==1.16.0
 typing-extensions==3.10.0.2
 urllib3==1.26.7
-yarl @ file:///C:/Users/sr782/Downloads/yarl-1.6.3-cp310-cp310-win_amd64.whl
+yarl @ <Path>/yarl-1.6.3-cp310-cp310-win_amd64.whl
 youtube-dl==2021.6.6
