@@ -37,9 +37,9 @@ async def on_ready():
     for guild in bot.guilds:
         for channel in guild.text_channels :
             if str(channel) == "🌎-general" or str(channel) == "𝕋𝕒𝕝𝕜𝕤" :
-                await channel.send('Sup SUCKERS...')
                 Embed = nextcord.Embed()
-                Embed.set_image(url="https://media4.giphy.com/media/u47skgWgE6E2ejacaR/giphy.gif")
+                Embed.set_image(url="https://c.tenor.com/Fi1DbctJXQQAAAAC/what-what-up.gif")
                 await channel.send(embed=Embed)
         print('Active in {}\n Member Count : {}'.format(guild.name,guild.member_count))
+
 bot.run(TOKEN, reconnect=True) #  bot=True,
