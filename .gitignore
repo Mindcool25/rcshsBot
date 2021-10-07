@@ -132,3 +132,7 @@ dmypy.json
 
 # Bot Token file
 token.txt
+
+# Any executable file
+*.exe
+
