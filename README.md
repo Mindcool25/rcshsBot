@@ -2,5 +2,6 @@
 Discord bot for the r/cshighschoolers discord server
 
 # Libraries Used
-- [Nextcord](https://www.github.com/nextcord/nextcord)
+- [discord](https://www.github.com/discord/discord)
 - Youtube_dl
+- FFMPEG(copy ffmpeg executable to the root folder)

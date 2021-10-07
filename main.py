@@ -32,4 +32,14 @@ async def on_ready():
         f'\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {nextcord.__version__}\n'
     )
 
+@bot.event
+async def on_ready():
+    for guild in bot.guilds:
+        for channel in guild.text_channels :
+            if str(channel) == "🌎-general" or str(channel) == "𝕋𝕒𝕝𝕜𝕤" :
+                await channel.send('Sup SUCKERS...')
+                Embed = nextcord.Embed()
+                Embed.set_image(url="https://media4.giphy.com/media/u47skgWgE6E2ejacaR/giphy.gif")
+                await channel.send(embed=Embed)
+        print('Active in {}\n Member Count : {}'.format(guild.name,guild.member_count))
 bot.run(TOKEN, reconnect=True) #  bot=True,
