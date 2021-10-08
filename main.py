@@ -15,7 +15,6 @@ def get_prefix(bot, message):
 # If you make your own cog file, add it in a similar way that basic is added here, with 'cogs.<filename>'
 extensions = ['cogs.basic','cogs.music']
 
-
 bot = commands.Bot(
     command_prefix=get_prefix, description='Bot for the r/CSHighschoolers discord server')
 
@@ -28,9 +27,7 @@ print("Loaded extensions")
 
 @bot.event
 async def on_ready():
-    print(
-        f'\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {nextcord.__version__}\n'
-    )
+    print(f'\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {nextcord.__version__}\n')
 
 @bot.event
 async def on_ready():
@@ -42,4 +39,4 @@ async def on_ready():
                 await channel.send(embed=Embed)
         print('Active in {}\n Member Count : {}'.format(guild.name,guild.member_count))
 
-bot.run(TOKEN, reconnect=True) #  bot=True,
+bot.run(TOKEN, reconnect=True)

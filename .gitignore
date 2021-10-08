@@ -130,9 +130,6 @@ dmypy.json
 .pyre/
 © 2021 GitHub, Inc.
 
-# Bot Token file
-token.txt
-
 # Any executable file
 *.exe
 

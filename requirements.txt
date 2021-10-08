@@ -19,3 +19,4 @@ typing-extensions==3.10.0.2
 urllib3==1.26.7
 yarl==1.6.3
 youtube-dl==2021.6.6
+nextcord[voice]==2.0.0a3
