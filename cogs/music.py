@@ -1,58 +1,47 @@
 import nextcord
 from nextcord.ext import commands
+from nextcord.flags import alias_flag_value
 from nextcord.player import FFmpegPCMAudio
-from youtube_dl import YoutubeDL
-from requests import get
-from nextcord.utils import get
+import youtube_dl
+import asyncio
 
-# ytdl_format_options = {
-# 	'format' 				: 	'bestaudio/best',
-# 	'outtmpl' 				:	'%(extractor)s-%(id)-%(title)s.%(ext)s',
-# 	'restrictfilenames' 	:	True,
-# 	'noplaylist'			:	True,
-# 	'nocheckcertificate'	:	True,
-# 	'ignoreerrors'			:	False,
-# 	'logtostderr'			:	False,
-# 	'quiet'					:	True,
-# 	'no_warnings'			:	True,
-# 	'default_search'		:	'auto',
-# 	'source_address'		:	'0.0.0.0'
-# }
+youtube_dl.utils.bug_reports_message = lambda: ''
 
-# ffmpeg_options = {
-# 	'options'	:	'-vn'
-# }
+ytdl_format_options = {
+    'format': 'bestaudio/best',
+    'restrictfilenames': True,
+    'noplaylist': True,
+    'nocheckcertificate': True,
+    'ignoreerrors': False,
+    'logtostderr': False,
+    'quiet': True,
+    'no_warnings': True,
+    'default_search': 'auto',
+    'source_address': '0.0.0.0' # bind to ipv4 since ipv6 addresses cause issues sometimes
+}
 
-# ytdl = YoutubeDL(ytdl_format_options)
+ffmpeg_options = {
+    'options': '-vn'
+}
 
-# class YTDLSource(nextcord.PCMVolumeTransformer):
-# 	def __init__(self, source, *, data, volume = 0.5):
-# 		super().__init__(source, volume)
+ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
 
-# 		self.data = data
+class YTDLSource(nextcord.PCMVolumeTransformer):
+    def __init__(self, source, *, data, volume=100):
+        super().__init__(source, volume)
+        self.data = data
+        self.title = data.get('title')
+        self.url = ""
 
-# 		self.title 	=	data.get('title')
-# 		self.url 	=	data.get('url')
-	
-# 	@classmethod
-# 	async def from_url(cls, url, *, loop=None, stream=False):
-# 		loop = loop or asyncio.get_event_loop()
-# 		data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=not stream))
-
-# 		if 'entries' in data:
-# 			# take first item from a playlist
-# 			data = data['entries'][0]
-
-# 		filename = data['url'] if stream else ytdl.prepare_filename(data)
-		
-# 		return cls(nextcord.FFmpegPCMAudio(filename, **ffmpeg_options), data=data)
-
-def search(query):
-	with YoutubeDL({'format' : 'bestaudio', 'noplaylist' : 'True'}) as ydl:
-		try: get(query)
-		except: info = ydl.extract_info(f"ytsearch:{query}", download=False)['entries'][0]
-		else: info = ydl.extract_info(query, download=False)
-	return (info, info['formats'][0]['url'])
+    @classmethod
+    async def from_url(cls, url, *, loop=None, stream=False):
+        loop = loop or asyncio.get_event_loop()
+        data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=not stream))
+        if 'entries' in data:
+            # take first item from a playlist
+            data = data['entries'][0]
+        filename = './music/' + data['title'] if stream else ytdl.prepare_filename(data)
+        return filename
 
 class MusicCog(commands.Cog):
 
@@ -87,20 +76,59 @@ class MusicCog(commands.Cog):
 
 	@commands.command(
 		name="play",
-		description="Play an audio",
+		description="Play a song",
 		usage=".play <URL>",
-		aliases=['.p']
+		aliases=['pl']
 	)
-	async def play(ctx, *, query):
-		FFMPEG_OPTS = {'before_options' : '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options' : '-vn'}
+	async def play(self,ctx,url):
+		try:
+			server = ctx.message.guild
+			voice_channel = server.voice_client
+			async with ctx.typing():
+			    filename = await YTDLSource.from_url(url)
+			    voice_channel.play(nextcord.FFmpegPCMAudio(executable="ffmpeg.exe", source=filename))
+			await ctx.send('**Now playing:** {}'.format(filename))
+		except:
+			await ctx.send("The bot is not connected to a voice channel.")
 
-		video, source = search(query)
-		voice = get(commands.voice_clients, guilf=ctx.guild)
+	@commands.command(
+		name='pause', 
+		description='This command pauses the song',
+		usage=".pause",
+		aliases = ['.pz']
+	)
+	async def pause(self,ctx):
+	    voice_client = ctx.message.guild.voice_client
+	    if voice_client.is_playing():
+	        await voice_client.pause()
+	    else:
+	        await ctx.send("The bot is not playing anything at the moment.")
+	
+	@commands.command(
+		name='resume', 
+		description='This command resumes the song',
+		usage=".resume",
+		aliases = ['.r']
+	)
+	async def resume(self,ctx):
+	    voice_client = ctx.message.guild.voice_client
+	    if voice_client.is_paused():
+	        await voice_client.resume()
+	    else:
+	        await ctx.send("The bot was not playing anything before this. Use play_song command")
 
-		await ctx.send(f'Now playing {source}.')
-
-		voice.play(FFmpegPCMAudio(source, **FFMPEG_OPTS), after=lambda e: print('done', e))
-		voice.is_playing()
+	@commands.command(
+		name='stop', 
+		description='This command stops the song',
+		usage=".stop",
+		aliases = ['.s']
+	)
+	async def stop(self,ctx):
+	    voice_client = ctx.message.guild.voice_client
+	    if voice_client.is_playing():
+	        await voice_client.stop()
+	    else:
+	        await ctx.send("The bot is not playing anything at the moment.")
 
 #ALWAYS KEEP THIS HERE
 # This needs to be at the bottom of all cog files for the cog to be added to the main bot
