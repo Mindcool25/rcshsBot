@@ -1,4 +1,7 @@
 from sys import prefix
+
+from nextcord.ext.commands.cog import CogMeta
+from nextcord.ext.commands.core import has_guild_permissions, has_role
 import botPrefixes as bp
 import nextcord
 from nextcord.ext import commands
@@ -9,7 +12,7 @@ async def print_prefixes(ctx):
     tempPres += f"<{bp.prefixes[i]}> "
   await ctx.reply(f"Your prefixes are: {tempPres}")
 
-class PrefixCog(commands.Cog):
+class PrefixCog(commands.Cog, command_attrs=dict(has_guild_permissions="Administrator")):
   #Initialise the bot
   def __init__(self, bot):
 	  self.bot = bot 
@@ -61,8 +64,9 @@ class PrefixCog(commands.Cog):
     description="Shows all the prefixes you can use for the bot.",
     aliases=["lp"]
   )
+  # @commands.has_guild_permissions("Administrator")
   async def list_prefixes(self, ctx):
-    print_prefixes(ctx)
+    await print_prefixes(ctx)
 
 
   # command to add a new prefix
@@ -70,11 +74,11 @@ class PrefixCog(commands.Cog):
     name="addPrefix",
     desscription="Adds a new prefix to the bot.",
     usage=f" <new prefix>",
-    aliases="ap"
+    aliases=["ap"]
   )
   async def add_prefix(self, ctx, newPrefix):
     bp.prefixes.append(str(newPrefix))
-    print_prefixes(ctx)
+    await print_prefixes(ctx)
 
 def setup(bot):
 	bot.add_cog(PrefixCog(bot))

@@ -30,4 +30,13 @@ async def on_ready():
         f"\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {nextcord.__version__}\n"
     )
 
+
+# This will handle events but if you dont handle every single error you can get, some might slip by without you knowing.
+# For more info watch (https://youtu.be/_2ifplRzQtM?list=PLW3GfRiBCHOhfVoiDZpSz8SM_HybXRPzZ)
+# 
+# @bot.event
+# async def on_command_error(ctx, error):
+#     if isinstance(error, commands.MissingRequiredArgument):
+#         await ctx.reply("Please pass in all required arguments.")
+
 bot.run(TOKEN, reconnect=True) #  bot=True,
