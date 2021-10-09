@@ -13,7 +13,6 @@ def get_prefix(bot, message):
 # If you make your own cog file, add it in a similar way that basic is added here, with 'cogs.<filename>'
 extensions = ["cogs.basic","cogs.music", "cogs.moderation.prefix_control"]
 
-
 bot = commands.Bot(
     command_prefix=get_prefix, description="Bot for the r/CSHighschoolers discord server")
 
@@ -23,13 +22,15 @@ if __name__ == "__main__":
         bot.load_extension(extension)
 print("Loaded extensions")
 
-
 @bot.event
 async def on_ready():
-    print(
-        f"\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {nextcord.__version__}\n"
-    )
-
+    for guild in bot.guilds:
+        for channel in guild.text_channels:
+            if str(channel) == "🌎-general" or str(channel) == "𝕋𝕒𝕝𝕜𝕤":
+                Embed = nextcord.Embed()
+                Embed.set_image(url="https://c.tenor.com/Fi1DbctJXQQAAAAC/what-what-up.gif")
+                await channel.send(embed=Embed)
+        print(f"Active in {guild.name}\n Member Count : {guild.member_count}")
 
 # This will handle events but if you dont handle every single error you can get, some might slip by without you knowing.
 # For more info watch (https://youtu.be/_2ifplRzQtM?list=PLW3GfRiBCHOhfVoiDZpSz8SM_HybXRPzZ)
@@ -39,4 +40,4 @@ async def on_ready():
 #     if isinstance(error, commands.MissingRequiredArgument):
 #         await ctx.reply("Please pass in all required arguments.")
 
-bot.run(TOKEN, reconnect=True) #  bot=True,
+bot.run(TOKEN, reconnect=True)
