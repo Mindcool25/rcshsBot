@@ -133,3 +133,6 @@ dmypy.json
 # Any executable file
 *.exe
 
+# Discord bot token
+token.txt
+
