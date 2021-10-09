@@ -1,7 +1,3 @@
-from sys import prefix
-
-from nextcord.ext.commands.cog import CogMeta
-from nextcord.ext.commands.core import has_guild_permissions, has_role
 import botPrefixes as bp
 import nextcord
 from nextcord.ext import commands
@@ -12,7 +8,7 @@ async def print_prefixes(ctx):
     tempPres += f"<{bp.prefixes[i]}> "
   await ctx.reply(f"Your prefixes are: {tempPres}")
 
-class PrefixCog(commands.Cog, command_attrs=dict(has_guild_permissions="Administrator")):
+class PrefixCog(commands.Cog, command_attrs=dict(has_guild_permissions="Administrator")): #command_attrs allows you to add cog wide command attributes
   #Initialise the bot
   def __init__(self, bot):
 	  self.bot = bot 
@@ -26,8 +22,9 @@ class PrefixCog(commands.Cog, command_attrs=dict(has_guild_permissions="Administ
     aliases=['cp']
   )
   async def change_single_prefix(self, ctx, changePrefix, newPrefix):
-    bp.prefixes[changePrefix.index] = str(newPrefix)
-    await ctx.send(f"The prefixes are now {bp.prefixes}.")
+    bp.prefixes.remove(changePrefix)
+    bp.prefixes.append(newPrefix)
+    await print_prefixes(ctx)
 
 
   # command to remove all prefixes and assign a new one
@@ -37,10 +34,11 @@ class PrefixCog(commands.Cog, command_attrs=dict(has_guild_permissions="Administ
     usage=f"{bp.prefixes} <new prefix>",
     aliases=["rap"]
   )
-  async def remove_all_prefixes(self, ctx, newPrefix):
-    bp.prefixes.clear 
+  async def remove_all_prefixes(self, ctx, newPrefix:str):
+    bp.prefixes.clear()
+    print(bp.prefixes)
     bp.prefixes.append(newPrefix)
-    await ctx.send(f"The new prefix is now {newPrefix}.")
+    await print_prefixes(ctx)
 
 
   # command to remove a single prefix
@@ -50,10 +48,10 @@ class PrefixCog(commands.Cog, command_attrs=dict(has_guild_permissions="Administ
     usage=f"{bp.prefixes} <prefix to remove>",
     aliases=['rsp']
   )
-  async def remove_single_prefix(self, ctx, removePrefix:str):
+  async def remove_single_prefix(self, ctx, removePrefix):
     if len(bp.prefixes) > 0:  
-      bp.prefixes.remove[removePrefix]
-      await ctx.reply(f"The prefixes are now {bp.prefixes}.")
+      bp.prefixes.remove(removePrefix)
+      await print_prefixes(ctx)
     else:
       await ctx.reply("Please add another prefix before removing this one.")
 
@@ -64,7 +62,6 @@ class PrefixCog(commands.Cog, command_attrs=dict(has_guild_permissions="Administ
     description="Shows all the prefixes you can use for the bot.",
     aliases=["lp"]
   )
-  # @commands.has_guild_permissions("Administrator")
   async def list_prefixes(self, ctx):
     await print_prefixes(ctx)
 
@@ -77,6 +74,10 @@ class PrefixCog(commands.Cog, command_attrs=dict(has_guild_permissions="Administ
     aliases=["ap"]
   )
   async def add_prefix(self, ctx, newPrefix):
+    for i in bp.prefixes:
+      if i == newPrefix:
+        await ctx.reply("This is already a prefix.")
+        return
     bp.prefixes.append(str(newPrefix))
     await print_prefixes(ctx)
 
