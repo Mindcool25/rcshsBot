@@ -223,7 +223,8 @@ class Music(commands.Cog):
 		aliases=['connect','j']
 	)
     async def connect_(self, ctx, *, channel: nextcord.VoiceChannel=None):
-        """Connect to voice.
+        """Connect to voice."""
+        """
         Parameters
         ------------
         channel: discord.VoiceChannel [Optional]
@@ -261,8 +262,8 @@ class Music(commands.Cog):
 		aliases=['sing', '.pl']
 	)
     async def play_(self, ctx, *, search: str):
+        """Request a song and add it to the queue."""
         """
-		Request a song and add it to the queue.
         This command attempts to join a valid voice channel if the bot is not already in one.
         Uses YTDL to automatically search and retrieve a song.
         Parameters
@@ -387,7 +388,8 @@ class Music(commands.Cog):
 
     @commands.command(name='volume', aliases=['vol'])
     async def change_volume(self, ctx, *, vol: float):
-        """Change the player volume.
+        """Change the player volume."""
+        """
         Parameters
         ------------
         volume: float or int [Required]
@@ -411,7 +413,8 @@ class Music(commands.Cog):
 
     @commands.command(name='stop')
     async def stop_(self, ctx):
-        """Stop the currently playing song and destroy the player.
+        """Stop the currently playing song and destroy the player."""
+        """
         !Warning!
             This will destroy the player assigned to your guild, also deleting any queued songs and settings.
         """

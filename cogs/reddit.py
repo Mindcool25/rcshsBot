@@ -12,7 +12,8 @@ async def __anext__(self):
     except StopIteration:
         raise StopAsyncIteration
 
-class RedditCog(commands.Cog):
+class Reddit(commands.Cog):
+    """Browse Memes"""
     # Initializing cog bot
     def __init__(self, bot):
         self.bot = bot
@@ -25,6 +26,7 @@ class RedditCog(commands.Cog):
         aliases         =   ['m']
     )
     async def memes(self, ctx):
+        """Fetch memes from Hot"""
         embed = nextcord.Embed(title="Ask, you shall receive", description="HAHA, meme go brr")
 
         async with aiohttp.ClientSession() as cs:
@@ -42,6 +44,7 @@ class RedditCog(commands.Cog):
         aliases         =   ['pre']
     )
     async def prequel(self, ctx):
+        """Fetches Prequel memes from Hot"""
         embed = nextcord.Embed(title="Ask, you shall receive", description="It will be done my lord")
 
         async with aiohttp.ClientSession() as cs:
@@ -58,6 +61,7 @@ class RedditCog(commands.Cog):
         aliases         =   ['wall']
     )
     async def wallpaper(self, ctx):
+        """Fetch wallpapers from Hot"""
         embed = nextcord.Embed(title="Ask, you shall receive", description="epic")
 
         async with aiohttp.ClientSession() as cs:
@@ -69,11 +73,12 @@ class RedditCog(commands.Cog):
     @commands.command(
         pass_context    =   True,
         name            =   "wholesome",
-        description     =   "Wholesome memes",
+        description     =   "Fetches Wholesome memes",
         usage           =   ".wholesome",
         aliases         =   ['w']
     )
     async def wholesome(self, ctx):
+        """Fetches Wholesome memes"""
         embed = nextcord.Embed(title="Ask, you shall receive", description="how nice")
 
         async with aiohttp.ClientSession() as cs:
@@ -93,4 +98,4 @@ class RedditCog(commands.Cog):
     #             await ctx.send(embed=embed)
 
 def setup(bot):
-    bot.add_cog(RedditCog(bot))
+    bot.add_cog(Reddit(bot))

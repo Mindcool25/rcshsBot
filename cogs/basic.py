@@ -15,7 +15,8 @@ import os
 invite_code = "887RFn5BPU"
 
 #COMMMANDS!
-class BasicCog(commands.Cog):
+class Basic(commands.Cog):
+	"""Basic commands for bot"""
 	# Initializing cog into the bot
 	def __init__(self, bot):
 		self.bot = bot
@@ -27,6 +28,7 @@ class BasicCog(commands.Cog):
 		aliases=['p']  # This allows you to have a shorthand for a command or just call it something different
 	)
 	async def ping_command(self, ctx):
+		"""Command to get how fast the bot responds to a command."""
 		start = d.timestamp(d.now())
 		print("\npinging...")
 		msg = await ctx.send(content="Pinging...")  # Sending initial message
@@ -41,6 +43,7 @@ class BasicCog(commands.Cog):
 		aliases=['e']
 	)
 	async def echo_command(self, ctx, *, text):
+		"""Command to echo what a user puts in"""
 		if ("@everyone" in text or "@members" in text or "@here" in text):
 			return
 		await ctx.send(text)
@@ -53,6 +56,7 @@ class BasicCog(commands.Cog):
 		aliases=['g']
 	)	
 	async def github_command(self, ctx):
+		"""Command to show github link to bot"""
 		await ctx.send("https://github.com/nuke886/rcshsBot")
 		
 	# Basic command to show discord invite link
@@ -63,7 +67,7 @@ class BasicCog(commands.Cog):
 		aliases=['i']
 	)	
 	async def invite_command(self, ctx):
-		# Send our discord invite link in chat
+		"""Send our discord invite link in chat"""
 		invites = await ctx.guild.invites()
 		active_codes = [i.code for i in invites]
 		if invite_code not in active_codes:
@@ -74,4 +78,4 @@ class BasicCog(commands.Cog):
 #ALWAYS KEEP THIS HERE
 # This needs to be at the bottom of all cog files for the cog to be added to the main bot
 def setup(bot):
-	bot.add_cog(BasicCog(bot))
+	bot.add_cog(Basic(bot))
