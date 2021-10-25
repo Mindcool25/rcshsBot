@@ -89,7 +89,7 @@ class Reddit(commands.Cog):
 
     @commands.command(
         pass_context    =   True,
-        name            =   "PH",
+        name            =   "program",
         description     =   "Programming Humor",
         usage           =   ".program",
         alaises         =   ['pro']
