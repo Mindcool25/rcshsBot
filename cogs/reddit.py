@@ -99,7 +99,7 @@ class Reddit(commands.Cog):
         embed = nextcord.Embed(title="Ask, you shall recieve", description="Programming Humor")
 
         async with aiohttp.ClientSession() as cs:
-            async with cs.get('https://www.reddit.com/r/ProgramminHumor/new.json?sort=hot') as r:
+            async with cs.get('https://www.reddit.com/r/ProgrammingHumor/new.json?sort=hot') as r:
                 res = await r.json()
                 embed.set_image(url=res['data']['children'][random.randint(0, 25)]['data']['url'])
                 await ctx.send(embed=embed)
