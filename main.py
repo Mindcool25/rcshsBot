@@ -1,10 +1,12 @@
 #IMPORTS
 import nextcord
+from nextcord.activity import Activity
 import botPrefixes as bp
 from nextcord.ext import commands
 
 WELCOME_MESSAGE_ID  = 846940613478973453
 RULES_CHANNEL       = 848980735754240040
+activity = nextcord.Activity(type=nextcord.ActivityType.listening, name="Bad Habits")
 
 #NOT TO BE EDITED!
 with open("token.txt") as f:
@@ -14,7 +16,7 @@ def get_prefix(bot, message):
     return commands.when_mentioned_or(*bp.prefixes)(bot, message)
 
 bot = commands.Bot(
-    command_prefix=get_prefix, description="Bot for the r/CSHighschoolers discord server", intents=nextcord.Intents.all())
+    command_prefix=get_prefix, description="Bot for the r/CSHighschoolers discord server", intents=nextcord.Intents.all(), Activity=activity, status=nextcord.Status.online)
 
 bot.remove_command('help')
 
