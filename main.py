@@ -16,7 +16,12 @@ def get_prefix(bot, message):
     return commands.when_mentioned_or(*bp.prefixes)(bot, message)
 
 bot = commands.Bot(
-    command_prefix=get_prefix, description="Bot for the r/CSHighschoolers discord server", intents=nextcord.Intents.all(), Activity=activity, status=nextcord.Status.online)
+    command_prefix=get_prefix,
+    description="Bot for the r/CSHighschoolers discord server",
+    intents=nextcord.Intents.all(),
+    Activity=activity,
+    status=nextcord.Status.online
+)
 
 bot.remove_command('help')
 
