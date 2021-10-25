@@ -87,6 +87,7 @@ class Reddit(commands.Cog):
                 embed.set_image(url=res['data']['children'][random.randint(0, 25)]['data']['url'])
                 await ctx.send(embed=embed)
 
+    """
     @commands.command(
         pass_context    =   True,
         name            =   "program",
@@ -95,7 +96,7 @@ class Reddit(commands.Cog):
         alaises         =   ['pro']
     )
     async def program(self, ctx):
-        """Programming Humor"""
+        """"""Programming Humor""""""
         embed = nextcord.Embed(title="Ask, you shall recieve", description="Programming Humor")
 
         async with aiohttp.ClientSession() as cs:
@@ -103,7 +104,7 @@ class Reddit(commands.Cog):
                 res = await r.json()
                 embed.set_image(url=res['data']['children'][random.randint(0, 25)]['data']['url'])
                 await ctx.send(embed=embed)
-
+    """
     # @commands.command(pass_context=True)
     # async def YOUR_CALL_COMMAND(ctx):
     #     embed = nextcord.Embed(title="EMBED_TITLE", description="EMBED_DESCRIPTION")
