@@ -1,7 +1,6 @@
 import nextcord
 from nextcord.ext import commands
 from nextcord.errors import Forbidden
-import botPrefixes
 
 """
 This custom help command is a perfect replacement for the default one on any Discord Bot written in Discord.py!
@@ -57,13 +56,13 @@ class Help(commands.Cog):
             
             # starting to build embed
             emb = nextcord.Embed(title='Commands and modules', color=nextcord.Color.blue(),
-            description=f"Use `{prefix}help <module>` to gain more information about that module\n"
+            description=f"Use ```{prefix}help <module>``` to gain more information about that module\n"
             )
 
             # iterating through cogs, gathering descriptions
             cogs_desc = ''
             for cog in self.bot.cogs:
-                cogs_desc += f'`{cog}`\n{self.bot.cogs[cog].__doc__}\n\n'
+                cogs_desc += f'```{cog}```\n{self.bot.cogs[cog].__doc__}\n\n'
 
             # adding 'list' of cogs to embed
             emb.add_field(name='Modules', value=cogs_desc, inline=False)
@@ -101,7 +100,7 @@ class Help(commands.Cog):
                     for command in self.bot.get_cog(cog).get_commands():
                         # if cog is not hidden
                         if not command.hidden:
-                            emb.add_field(name=f"`{prefix}{command.name}`", value=command.help, inline=False)
+                            emb.add_field(name=f"```{prefix}{command.name}```", value=command.help, inline=False)
                     # found cog - breaking loop
                     break
                 
@@ -109,7 +108,7 @@ class Help(commands.Cog):
                 # yes, for-loops an else statement, it's called when no 'break' was issued
                 else:
                     emb = nextcord.Embed(title="What's that?!",
-                    description=f"I've never heard from a module called `{input[0]}` before",
+                    description=f"I've never heard from a module called ```{input[0]}``` before",
                     color=nextcord.Color.orange())
         
         # too many cogs requested - only one at a time is allowed

@@ -6,7 +6,7 @@ from nextcord.ext import commands
 
 WELCOME_MESSAGE_ID  = 846940613478973453
 RULES_CHANNEL       = 848980735754240040
-activity = nextcord.Activity(type=nextcord.ActivityType.listening, name="Bad Habits")
+activity = nextcord.Activity(type=nextcord.ActivityType.listening, name="Closer")
 
 #NOT TO BE EDITED!
 with open("token.txt") as f:
@@ -18,9 +18,7 @@ def get_prefix(bot, message):
 bot = commands.Bot(
     command_prefix=get_prefix,
     description="Bot for the r/CSHighschoolers discord server",
-    intents=nextcord.Intents.all(),
-    Activity=activity,
-    status=nextcord.Status.online
+    intents=nextcord.Intents.all()
 )
 
 bot.remove_command('help')
@@ -37,6 +35,7 @@ print("Loaded extensions")
 @bot.event
 async def on_ready():
     print("Logged in as", bot.user.name)
+    await bot.change_presence(activity)
 
 @bot.event
 async def on_member_join(member):

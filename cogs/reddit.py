@@ -87,22 +87,22 @@ class Reddit(commands.Cog):
                 embed.set_image(url=res['data']['children'][random.randint(0, 25)]['data']['url'])
                 await ctx.send(embed=embed)
 
-    # @commands.command(
-    #     pass_context    =   True,
-    #     name            =   "program",
-    #     description     =   "Programming Humor",
-    #     usage           =   ".program",
-    #     alaises         =   ['pro']
-    # )
-    # async def program(self, ctx):
-    #     """Programming Humor"""
-    #     embed = nextcord.Embed(title="Ask, you shall recieve", description="Programming Humor")
+    @commands.command(
+        pass_context    =   True,
+        name            =   "program",
+        description     =   "Programming Humor",
+        usage           =   ".program",
+        alaises         =   ['pro']
+    )
+    async def program(self, ctx):
+        """Programming Humor"""
+        embed = nextcord.Embed(title="Ask, you shall recieve", description="Programming Humor")
 
-    #     async with aiohttp.ClientSession() as cs:
-    #         async with cs.get('https://www.reddit.com/r/ProgrammingHumor/new.json?sort=hot') as r:
-    #             res = await r.json()
-    #             embed.set_image(url=res['data']['children'][random.randint(0, 25)]['data']['url'])
-    #             await ctx.send(embed=embed)
+        async with aiohttp.ClientSession() as cs:
+            async with cs.get('https://www.reddit.com/r/ProgrammerHumor/new.json?sort=hot') as r:
+                res = await r.json()
+                embed.set_image(url=res['data']['children'][random.randint(0, 25)]['data']['url'])
+                await ctx.send(embed=embed)
     
     # @commands.command(pass_context=True)
     # async def YOUR_CALL_COMMAND(ctx):

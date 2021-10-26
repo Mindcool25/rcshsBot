@@ -67,13 +67,9 @@ class Basic(commands.Cog):
 		aliases=['i']
 	)	
 	async def invite_command(self, ctx):
-		"""Send our discord invite link in chat"""
-		invites = await ctx.guild.invites()
-		active_codes = [i.code for i in invites]
-		if invite_code not in active_codes:
-			await ctx.send("The currently set invite code is no longer valid!")
-		else:
-			await ctx.send(f"https://discord.gg/{invite_code}")
+		"""Send discord invite link in chat"""
+		link = await ctx.channel.create_invite(max_age = 300)
+		await ctx.send(f"Here is an instant invite to the server: {link}")
 
 #ALWAYS KEEP THIS HERE
 # This needs to be at the bottom of all cog files for the cog to be added to the main bot
