@@ -6,7 +6,6 @@ from nextcord.ext import commands
 
 WELCOME_MESSAGE_ID  = 846940613478973453
 RULES_CHANNEL       = 848980735754240040
-activity = nextcord.Activity(type=nextcord.ActivityType.listening, name="Closer")
 
 #NOT TO BE EDITED!
 with open("token.txt") as f:
@@ -35,7 +34,7 @@ print("Loaded extensions")
 @bot.event
 async def on_ready():
     print("Logged in as", bot.user.name)
-    await bot.change_presence(activity)
+    # await bot.change_presence(nextcord.Activity(type=nextcord.ActivityType.listening(name="Closer")))
 
 @bot.event
 async def on_member_join(member):
