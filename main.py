@@ -4,9 +4,6 @@ from nextcord.activity import Activity
 import botPrefixes as bp
 from nextcord.ext import commands
 
-WELCOME_MESSAGE_ID  = 846940613478973453
-RULES_CHANNEL       = 848980735754240040
-
 #NOT TO BE EDITED!
 with open("token.txt") as f:
     TOKEN = f.readline()
@@ -35,19 +32,6 @@ print("Loaded extensions")
 async def on_ready():
     print("Logged in as", bot.user.name)
     # await bot.change_presence(nextcord.Activity(type=nextcord.ActivityType.listening(name="Closer")))
-
-@bot.event
-async def on_member_join(member):
-    try:
-        channel = bot.get_channel(WELCOME_MESSAGE_ID)
-        rules   = bot.get_channel(RULES_CHANNEL)
-        try:
-            value=f"Welcome {member.mention} to {member.guild.name}' Discord server! Check out our rules over at {rules.mention} and have a nice stay!"
-            await channel.send(value)
-        except Exception as e:
-            raise e
-    except Exception as e:
-        raise e
 
 """
 This will handle events but if you dont handle every single error you can get, some might slip by without you knowing.
