@@ -42,7 +42,7 @@ logging.debug('Started Logging')
 logging.info('Connecting to Discord.')
 
 # If you make your own cog file, add it in a similar way that basic is added here, with 'cogs.<filename>'
-extensions = ["cogs.basic","cogs.music", "cogs.utils.prefix_control", "cogs.reddit", "cogs.utils.help"]
+extensions = ["cogs.basic","cogs.music", "cogs.utils.prefix_control", "cogs.reddit", "cogs.utils.help", "cogs.level.antispam", "cogs.level.doublexp", "cogs.level.ignoredrole", "cogs.level.leaderboard", "cogs.level.levelchannel", "cogs.level.mutedrole", "cogs.level.mutemessages", "cogs.level.mutetime", "cogs.level.rank", "cogs.level.rank", "cogs.level.role", "cogs.level.talkchannels", "cogs.level.warningmessages", "cogs.level.xppermessage", "Addons.Clan System", "Addons.Events", "Addons.Holiday System", "Addons.Profile+", "Addons.Extras+", "Addons.Stats", "Addons.Vocal System", "Systems.holidaysys", "Systems.levelsys", "Systems.spamsys"]
 
 if __name__ == "__main__":
     for extension in extensions:

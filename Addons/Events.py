@@ -8,7 +8,7 @@ import nextcord
 from nextcord.ext import commands, tasks
 from ruamel.yaml import YAML
 
-import kumoslab.get
+import Libs.get
 from Systems.levelsys import levelling
 
 # Reads the config file, no need for changing.
