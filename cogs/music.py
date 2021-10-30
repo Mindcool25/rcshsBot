@@ -1,6 +1,6 @@
 """
 For a more basic voice example please read:
-    https://github.com/Rapptz/discord.py/blob/rewrite/examples/basic_voice.py
+    https://github.com/Rapptz/nextcord.py/blob/rewrite/examples/basic_voice.py
 """
 import nextcord
 from nextcord.ext import commands
@@ -227,7 +227,7 @@ class Music(commands.Cog):
         """
         Parameters
         ------------
-        channel: discord.VoiceChannel [Optional]
+        channel: nextcord.VoiceChannel [Optional]
             The channel to connect to. If a channel is not specified, an attempt to join the voice channel you are in
             will be made.
         This command also handles moving the bot to different channels.
@@ -281,7 +281,7 @@ class Music(commands.Cog):
         player = self.get_player(ctx)
 
         # If download is False, source will be a dict which will be used later to regather the stream.
-        # If download is True, source will be a discord.FFmpegPCMAudio with a VolumeTransformer.
+        # If download is True, source will be a nextcord.FFmpegPCMAudio with a VolumeTransformer.
         source = await YTDLSource.create_source(ctx, search, loop=self.bot.loop, download=False)
 
         await player.queue.put(source)

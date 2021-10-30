@@ -59,15 +59,15 @@ class Basic(commands.Cog):
 		"""Command to show github link to bot"""
 		await ctx.send("https://github.com/nuke886/rcshsBot")
 		
-	# Basic command to show discord invite link
+	# Basic command to show nextcord invite link
 	@commands.command(
 		name="invite",
-		description="Command to show discord server invite link",
+		description="Command to show nextcord server invite link",
 		usage=".invite",
 		aliases=['i']
 	)	
 	async def invite_command(self, ctx):
-		"""Send discord invite link in chat"""
+		"""Send nextcord invite link in chat"""
 		link = await ctx.channel.create_invite(max_age = 300)
 		await ctx.send(f"Here is an instant invite to the server: {link}")
 

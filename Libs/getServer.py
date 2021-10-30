@@ -1,4 +1,4 @@
-import discord
+import nextcord
 from Systems.levelsys import levelling
 
 

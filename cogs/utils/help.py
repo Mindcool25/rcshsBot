@@ -3,7 +3,7 @@ from nextcord.ext import commands
 from nextcord.errors import Forbidden
 
 """
-This custom help command is a perfect replacement for the default one on any Discord Bot written in Discord.py!
+This custom help command is a perfect replacement for the default one on any nextcord Bot written in nextcord.py!
 However, you must put "bot.remove_command('help')" in your bot, and the command must be in a cog for it to work.
 """
 
@@ -80,7 +80,7 @@ class Help(commands.Cog):
                 emb.add_field(name='Not belonging to a module', value=commands_desc, inline=False)
 
             # setting information about author
-            emb.add_field(name="About", value=f"The Bot is a maintained fork of the original r/cshighschoolers bot developed by Mindcool, based on discord.py.\nPlease visit https://github.com/nuke886/rcshsBot to submit ideas or bugs.")
+            emb.add_field(name="About", value=f"The Bot is a maintained fork of the original r/cshighschoolers bot developed by Mindcool, based on nextcord.py.\nPlease visit https://github.com/nuke886/rcshsBot to submit ideas or bugs.")
             
             emb.set_footer(text=f"Bot is running {version}")
         
