@@ -20,22 +20,22 @@ class talkchannels(commands.Cog):
     async def talkchannel(self, ctx, state=None, channel=None):
         prefix = config['Prefix']
         if state is None:
-            embed = nextcord.Embed(title=":x: SETUP FAILED!", description=f"`You need to define a state! {prefix}talkchannel <add|remove> <channel>`", colour=config['error_embed_colour'])
+            embed = nextcord.Embed(title=":x: SETUP FAILED!", description=f"`You need to define a state! {prefix}talkchannel <add|remove> <channel>`", color=config['error_embed_color'])
             await ctx.send(embed=embed)
             return
         if channel is None:
             embed = nextcord.Embed(title=":x: SETUP FAILED!",
                                   description=f"`You need to define a channel! {prefix}talkchannel <add|remove> <channel>`",
-                                  colour=config['error_embed_colour'])
+                                  color=config['error_embed_color'])
             await ctx.send(embed=embed)
             return
         elif state.lower() == "add":
             channel = nextcord.utils.get(ctx.guild.channels, name=channel)
             stats = levelling.find_one({"server" : ctx.guild.id})
-            if stats['ignored_cannels'] == "None":
+            if stats['ignored_channels'] == "None":
                 levelling.update_one({"server" : ctx.guild.id}, {"$set" : {"ignored_channels" : []}})
             levelling.update_one({"server" : ctx.guild.id}, {"$push" : {"ignored_channels" : channel.id}})
-            embed = nextcord.Embed(title="✅ TALK CHANNEL ADDED!", description=f"`You can now earn xp in: {channel.name}`", colour=config['success_embed_colour'])
+            embed = nextcord.Embed(title="✅ TALK CHANNEL ADDED!", description=f"`You can now earn xp in: {channel.name}`", color=config['success_embed_color'])
             await ctx.send(embed=embed)
             return
         elif state.lower() == "remove":
@@ -43,7 +43,7 @@ class talkchannels(commands.Cog):
             levelling.update_one({"server": ctx.guild.id}, {"$pull": {"ignored_channels": channel.id}})
             embed = nextcord.Embed(title="✅ TALK CHANNEL REMOVED!",
                                   description=f"`You can no longer earn xp in: {channel.name}`",
-                                  colour=config['success_embed_colour'])
+                                  color=config['success_embed_color'])
             await ctx.send(embed=embed)
             return
 

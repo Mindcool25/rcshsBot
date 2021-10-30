@@ -4,7 +4,7 @@ from ruamel.yaml import YAML
 from Systems.levelsys import levelling
 
 yaml = YAML()
-with open("Configs.yml", "r", encoding="utf-8") as file:
+with open("Configs/config.yml", "r", encoding="utf-8") as file:
     config = yaml.load(file)
 
 prefix = config['Prefix']

@@ -33,6 +33,8 @@ bot = commands.Bot(
 
 bot.remove_command('help')
 
+WELCOME_MESSAGE_ID  = 846940613478973453
+RULES_CHANNEL       = 848980735754240040
 
 # sends discord logging files which could potentially be useful for catching errors.
 os.remove("Logs/logs.txt")
@@ -42,7 +44,7 @@ logging.debug('Started Logging')
 logging.info('Connecting to Discord.')
 
 # If you make your own cog file, add it in a similar way that basic is added here, with 'cogs.<filename>'
-extensions = ["cogs.basic","cogs.music", "cogs.utils.prefix_control", "cogs.reddit", "cogs.utils.help", "cogs.level.antispam", "cogs.level.doublexp", "cogs.level.ignoredrole", "cogs.level.leaderboard", "cogs.level.levelchannel", "cogs.level.mutedrole", "cogs.level.mutemessages", "cogs.level.mutetime", "cogs.level.rank", "cogs.level.rank", "cogs.level.role", "cogs.level.talkchannels", "cogs.level.warningmessages", "cogs.level.xppermessage", "Addons.Clan System", "Addons.Events", "Addons.Holiday System", "Addons.Profile+", "Addons.Extras+", "Addons.Stats", "Addons.Vocal System", "Systems.holidaysys", "Systems.levelsys", "Systems.spamsys"]
+extensions = ["cogs.basic","cogs.music", "cogs.utils.prefix_control", "cogs.reddit", "cogs.utils.help", "cogs.level.antispam", "cogs.level.doublexp", "cogs.level.ignoredrole", "cogs.level.leaderboard", "cogs.level.levelchannel", "cogs.level.mutedrole", "cogs.level.mutemessages", "cogs.level.mutetime", "cogs.level.rank", "cogs.level.role", "cogs.level.talkchannels", "cogs.level.warningmessages", "cogs.level.xppermessage", "Addons.Events", "Addons.Holiday System", "Addons.Profile+", "Addons.Stats", "Addons.Vocal System", "Systems.levelsys",]
 
 if __name__ == "__main__":
     for extension in extensions:
@@ -79,6 +81,19 @@ async def on_ready():
         bot_data = {"bot_name": f"{bot.user.name}", "event_state": False}
         levelling.insert_one(bot_data)
 
+@bot.event
+async def on_member_join(member):
+    try:
+        channel = bot.get_channel(WELCOME_MESSAGE_ID)
+        rules   = bot.get_channel(RULES_CHANNEL)
+        try:
+            value=f"Welcome {member.mention} to {member.guild.name}' Discord server! Check out our rules over at {rules.mention} and have a nice stay!"
+            await channel.send(value)
+        except Exception as e:
+            raise e
+    except Exception as e:
+        raise e
+        
 @bot.command()
 async def addons(ctx):
     # ✅ // ❌
@@ -127,31 +142,6 @@ async def addons(ctx):
         embed.add_field(name="Events", value="`Installed ❌`")
 
     await ctx.send(embed=embed)
-
-logging.info("------------- Loading -------------")
-for fn in listdir("Commands"):
-    if fn.endswith(".py"):
-        logging.info(f"Loading: {fn}")
-        bot.load_extension(f"Commands.{fn[:-3]}")
-        logging.info(f"Loaded {fn}")
-
-for fn in listdir("Addons"):
-    if fn.endswith(".py"):
-        logging.info(f"Loading: {fn} Addon")
-        bot.load_extension(f"Addons.{fn[:-3]}")
-        logging.info(f"Loaded {fn} Addon")
-
-logging.info(f"Loading Level System")
-bot.load_extension("Systems.levelsys")
-logging.info(f"Loaded Level System")
-
-if spamconfig['antispam_system'] is True:
-    logging.info(f"Loading Anti-Spam System")
-    bot.load_extension("Systems.spamsys")
-    logging.info(f"Loaded Anti-Spam System")
-
-logging.info("------------- Finished Loading -------------")
-
 """
 This will handle events but if you dont handle every single error you can get, some might slip by without you knowing.
 For more info watch (https://youtu.be/_2ifplRzQtM?list=PLW3GfRiBCHOhfVoiDZpSz8SM_HybXRPzZ)

@@ -8,16 +8,15 @@ import vacefron
 import os
 import re
 from pymongo import MongoClient
+import urllib
+import certifi
 
-MONGODB_URI = ''
-COLLECTION = ''
-DB_NAME = ''
+MONGODB_URI = "URL"
+COLLECTION = 'levels'
+DB_NAME = 'discord'
 
-cluster = MongoClient(MONGODB_URI)
+cluster = MongoClient(MONGODB_URI, tlsCAFile=certifi.where())
 levelling = cluster[COLLECTION][DB_NAME]
-
-WELCOME_MESSAGE_ID  = 846940613478973453
-RULES_CHANNEL       = 848980735754240040
 
 # Reads config file, no need for changing.
 yaml = YAML()
@@ -45,7 +44,7 @@ class levelsys(commands.Cog):
             }
         )
         serverstats = levelling.find_one({"server" : ctx.guild.id})
-        bot_stats = levelling.find_one({"bot_name" : self.client.user.name})
+        bot_stats = levelling.find_one({"bot_name" : "r/cshighschooler"})
         if not ctx.author.bot:
             if stats is None:
 
@@ -318,16 +317,6 @@ class levelsys(commands.Cog):
         
         @commands.Cog.listen()
         async def on_member_join(self, member):
-            try:
-                channel = commands.get_channel(WELCOME_MESSAGE_ID)
-                rules   = commands.get_channel(RULES_CHANNEL)
-                try:
-                    value=f"Welcome {member.mention} to {member.guild.name}' Discord server! Check out our rules over at {rules.mention} and have a nice stay!"
-                    await channel.send(value)
-                except Exception as e:
-                    raise e
-            except Exception as e:
-                raise e
             if not member.bot:
                 getGuild = levelling.find_one(
                     {
