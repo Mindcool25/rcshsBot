@@ -28,3 +28,8 @@ urllib3
 websocket-client
 yarl
 youtube-dl
+orjson
+Brotli
+cchardet
+pycares
+aiodns
