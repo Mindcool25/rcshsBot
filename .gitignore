@@ -7,6 +7,9 @@ __pycache__/
 # C extensions
 *.so
 
+levels/
+pl_dictionary.1py
+
 # Distribution / packaging
 .Python
 build/

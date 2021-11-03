@@ -1,21 +1,15 @@
 #IMPORTS
+from typing import Container
 import nextcord
-from nextcord.activity import Activity
 from nextcord.ext import commands
-from nextcord.ext.commands import CommandNotFound, MissingRequiredArgument, CommandInvokeError, MissingRole, NoPrivateMessage
 import botPrefixes as bp
-from ruamel.yaml import YAML
-import logging
 import os
 from os import listdir
+from Libs.pretty_help import PrettyHelp, DefaultMenu
 
-from Systems.levelsys import levelling
-
-yaml = YAML()
-with open("Configs/config.yml", "r", encoding="utf-8") as file:
-    config = yaml.load(file)
-with open("Configs/spamconfig.yml", "r", encoding="utf-8") as file2:
-    spamconfig = yaml.load(file2)
+# Welcome and Rules channel link
+WELCOME_MESSAGE_ID  = 846940613478973453
+RULES_CHANNEL       = 848980735754240040
 
 #NOT TO BE EDITED!
 with open("token.txt") as f:
@@ -31,55 +25,33 @@ bot = commands.Bot(
     case_insensitive=True
 )
 
-bot.remove_command('help')
+# Help Command
+menu = DefaultMenu(page_left="\u2B05", page_right="\u27A1", remove="\u274C", active_time=5)
+version = "1.0.5"
+user_name = "r/cshighschooler"
+ending_note = f"{user_name}-{version}"
 
-WELCOME_MESSAGE_ID  = 846940613478973453
-RULES_CHANNEL       = 848980735754240040
-
-# sends discord logging files which could potentially be useful for catching errors.
-os.remove("Logs/logs.txt")
-FORMAT = '[%(asctime)s]:[%(levelname)s]: %(message)s'
-logging.basicConfig(filename='Logs/logs.txt', level=logging.DEBUG, format=FORMAT)
-logging.debug('Started Logging')
-logging.info('Connecting to Discord.')
-
-# If you make your own cog file, add it in a similar way that basic is added here, with 'cogs.<filename>'
-extensions = ["cogs.basic","cogs.music", "cogs.utils.prefix_control", "cogs.reddit", "cogs.utils.help", "cogs.level.antispam", "cogs.level.doublexp", "cogs.level.ignoredrole", "cogs.level.leaderboard", "cogs.level.levelchannel", "cogs.level.mutedrole", "cogs.level.mutemessages", "cogs.level.mutetime", "cogs.level.rank", "cogs.level.role", "cogs.level.talkchannels", "cogs.level.warningmessages", "cogs.level.xppermessage", "Addons.Events", "Addons.Holiday System", "Addons.Profile+", "Addons.Stats", "Addons.Vocal System", "Systems.levelsys",]
+bot.help_command = PrettyHelp(menu=menu, ending_note=ending_note)
 
 if __name__ == "__main__":
-    for extension in extensions:
-        print(f"Loading {extension}...")
-        bot.load_extension(extension)
+    for fn in listdir("cogs"):
+        if fn.endswith(".py"):
+            bot.load_extension(f"cogs.{fn[:-3]}")
+            print(f"Loading cogs.{fn[:-3]}")
+    
+    for fn in listdir("cogs/utils"):
+        if fn.endswith(".py"):
+            bot.load_extension(f"cogs.utils.{fn[:-3]}")
+            print(f"Loading cogs.utils.{fn[:-3]}")
+
 print("Loaded extensions")
 
 @bot.event
 async def on_ready():
-    config_status = config['bot_status_text']
-    config_activity = config['bot_activity']
-    activity = nextcord.Game(name=config['bot_status_text'])
-    logging.info('Getting Bot Activity from Config')
-    print("If you encounter any bugs, please let me know.")
     print('------')
     print('Logged In As:')
     print(f"Username: {bot.user.name}\nID: {bot.user.id}")
     print('------')
-    print(f"Status: {config_status}\nActivity: {config_activity}")
-    print('------')
-    await bot.change_presence(status=config_activity, activity=activity)
-    for guild in bot.guilds:
-        serverstats = levelling.find({"server": guild.id, "ignored_channels": {"$exists": False}})
-        for doc in serverstats:
-            levelling.update_one({"server": guild.id}, {"$set": {"ignored_channels": []}})
-            print(f"Guild: {guild.name} was missing 'ignored_channels' -  Automatically added it!")
-        userstats = levelling.find({"guildid": guild.id, "name": {"$exists": False}, "id": {"$exists": True}})
-        for doc in userstats:
-            member = await bot.fetch_user(doc["id"])
-            levelling.update_one({"guildid": guild.id, "id": doc['id']}, {"$set": {"name": str(f"{member}")}})
-            print(f"The field NAME was missing for: {member} - Automatically added it!")
-    stats = levelling.find_one({"bot_name": f"{bot.user.name}"})
-    if stats is None:
-        bot_data = {"bot_name": f"{bot.user.name}", "event_state": False}
-        levelling.insert_one(bot_data)
 
 @bot.event
 async def on_member_join(member):
@@ -93,55 +65,7 @@ async def on_member_join(member):
             raise e
     except Exception as e:
         raise e
-        
-@bot.command()
-async def addons(ctx):
-    # ✅ // ❌
-    embed = nextcord.Embed(title="ADDON PACKAGES")
 
-    # Clan System
-    if os.path.exists("Addons/Clan System.py") is True:
-        embed.add_field(name="Clan System", value="`Installed ✅`")
-    else:
-        embed.add_field(name="Clan System", value="`Installed ❌`")
-
-    # Holiday System
-    if os.path.exists("Addons/Holiday System.py") is True:
-        embed.add_field(name="Holiday System", value="`Installed ✅`")
-    else:
-        embed.add_field(name="Holiday System", value="`Installed ❌`")
-
-    # Vocal System
-    if os.path.exists("Addons/Vocal System.py") is True:
-        embed.add_field(name="Vocal System", value="`Installed ✅`")
-    else:
-        embed.add_field(name="Vocal System", value="`Installed ❌`")
-
-    # Profile+
-    if os.path.exists("Addons/Profile+.py") is True:
-        embed.add_field(name="Profile+", value="`Installed ✅`")
-    else:
-        embed.add_field(name="Profile+", value="`Installed ❌`")
-
-    # Extras+
-    if os.path.exists("Addons/Extras+.py") is True:
-        embed.add_field(name="Extras+", value="`Installed ✅`")
-    else:
-        embed.add_field(name="Extras+", value="`Installed ❌`")
-
-    # Stats
-    if os.path.exists("Addons/Stats.py") is True:
-        embed.add_field(name="Stats", value="`Installed ✅`")
-    else:
-        embed.add_field(name="Stats", value="`Installed ❌`")
-
-    # Events
-    if os.path.exists("Addons/Events.py") is True:
-        embed.add_field(name="Events", value="`Installed ✅`")
-    else:
-        embed.add_field(name="Events", value="`Installed ❌`")
-
-    await ctx.send(embed=embed)
 """
 This will handle events but if you dont handle every single error you can get, some might slip by without you knowing.
 For more info watch (https://youtu.be/_2ifplRzQtM?list=PLW3GfRiBCHOhfVoiDZpSz8SM_HybXRPzZ)
