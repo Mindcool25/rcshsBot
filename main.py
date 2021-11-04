@@ -18,11 +18,13 @@ with open("token.txt") as f:
 def get_prefix(bot, message):
     return commands.when_mentioned_or(*bp.prefixes)(bot, message)
 
+intents = nextcord.Intents.all()
+intents.members = True
+
 bot = commands.Bot(
     command_prefix=get_prefix,
     description="Bot for the r/CSHighschoolers discord server",
-    intents=nextcord.Intents.all(),
-    case_insensitive=True
+    intents=intents
 )
 
 # Help Command
@@ -43,6 +45,11 @@ if __name__ == "__main__":
         if fn.endswith(".py"):
             bot.load_extension(f"cogs.utils.{fn[:-3]}")
             print(f"Loading cogs.utils.{fn[:-3]}")
+    
+    for fn in listdir("cogs/user"):
+        if fn.endswith(".py"):
+            bot.load_extension(f"cogs.user.{fn[:-3]}")
+            print(f"Loading cogs.user.{fn[:-3]}")
 
 print("Loaded extensions")
 
