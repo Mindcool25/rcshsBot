@@ -5,14 +5,27 @@ from nextcord.ext.commands.errors import NoEntryPointError
 
 from config.reaction_roles import reaction_roles
 
-ROLES_CHANNEL = 848991838903861298
-
 class ReactionRoles(commands.Cog):
     
     # Initialize the bot
     def __init__(self, bot):
         super().__init__()
         self.bot = bot
+
+    @commands.has_permissions(administrator=True)
+    @commands.command(
+        name="verify",
+        description="Send verfiy message",
+        aliases=['v'],
+        pass_context=True,
+        usage=".verify"
+    )
+    async def verify(self, ctx):
+        verify = self.bot.get_channel(848985486324006962)
+        embed = nextcord.Embed(description="React with ✅ to get access to the server", color=0x00ff80)
+        msg = await verify.send(embed=embed)
+
+        await msg.add_reaction('✅')        
 
     # Send reaction role message
     @commands.has_permissions(administrator=True)
