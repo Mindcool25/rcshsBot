@@ -73,7 +73,7 @@ React with :five: to get the <@&848994304029622312> role
     async def process_reaction(self, payload: RawReactionActionEvent, r_type=None) -> None:
         if payload.message_id in reaction_roles.keys():
             for obj in reaction_roles[payload.message_id]:
-                if obj[0] == payload.emoji.name:
+                if obj[0] == str(payload.emoji):
                     guild = self.bot.get_guild(payload.guild_id)
                     user = await guild.fetch_member(payload.user_id)
                     role = guild.get_role(obj[1])
