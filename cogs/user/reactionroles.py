@@ -3,7 +3,7 @@ import nextcord
 from nextcord.ext import commands
 from nextcord.ext.commands.errors import NoEntryPointError
 
-from config.reaction_roles import reaction_roles
+from Configs.reaction_roles import reaction_roles
 
 class ReactionRoles(commands.Cog):
     

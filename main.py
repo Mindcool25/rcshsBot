@@ -5,11 +5,19 @@ from nextcord.ext import commands
 import botPrefixes as bp
 import os
 from os import listdir
+from ruamel.yaml import YAML
 from Libs.pretty_help import PrettyHelp, DefaultMenu
+from Systems.levelsys import levelling
 
 # Welcome and Rules channel link
 WELCOME_MESSAGE_ID  = 846940613478973453
 RULES_CHANNEL       = 848980735754240040
+
+antispam = False
+
+yaml = YAML()
+with open("Configs/config.yml", "r", encoding="utf-8") as file:
+    config = yaml.load(file)
 
 #NOT TO BE EDITED!
 with open("token.txt") as f:
@@ -50,6 +58,18 @@ if __name__ == "__main__":
         if fn.endswith(".py"):
             bot.load_extension(f"cogs.user.{fn[:-3]}")
             print(f"Loading cogs.user.{fn[:-3]}")
+    
+    for fn in listdir("cogs/levels"):
+        if fn.endswith(".py"):
+            bot.load_extension(f"cogs.levels.{fn[:-3]}")
+            print(f"Loading cogs.levels.{fn[:-3]}")
+    
+    bot.load_extension("Systems.levelsys")
+    print("Loading Systems.levelsys")
+
+    if antispam is True:
+        bot.load_extension("Systems.Antispam")
+        print("Loading Systems.Antispam")
 
 print("Loaded extensions")
 
@@ -59,6 +79,24 @@ async def on_ready():
     print('Logged In As:')
     print(f"Username: {bot.user.name}\nID: {bot.user.id}")
     print('------')
+    activity = nextcord.Game(name=config['bot_status_text'])
+    config_status = config['bot_status_text']
+    config_activity = config['bot_activity']
+    await bot.change_presence(status=config_activity, activity=activity)
+    for guild in bot.guilds:
+        serverstats = levelling.find({"server": guild.id, "ignored_channels": {"$exists": False}})
+        for doc in serverstats:
+            levelling.update_one({"server": guild.id}, {"$set": {"ignored_channels": []}})
+            print(f"Guild: {guild.name} was missing 'ignored_channels' -  Automatically added it!")
+        userstats = levelling.find({"guildid": guild.id, "name": {"$exists": False}, "id": {"$exists": True}})
+        for doc in userstats:
+            member = await bot.fetch_user(doc["id"])
+            levelling.update_one({"guildid": guild.id, "id": doc['id']}, {"$set": {"name": str(f"{member}")}})
+            print(f"The field NAME was missing for: {member} - Automatically added it!")
+    stats = levelling.find_one({"bot_name": f"{bot.user.name}"})
+    if stats is None:
+        bot_data = {"bot_name": f"{bot.user.name}", "event_state": False}
+        levelling.insert_one(bot_data)
 
 @bot.event
 async def on_member_join(member):
