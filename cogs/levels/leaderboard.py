@@ -37,7 +37,7 @@ class leaderboard(commands.Cog):
                     embed.add_field(name=f"#{i}: {temp.name}",
                                     value=f"Level: `{level}`\nTotal XP: `{xp}`\n", inline=True)
                     i += 1
-                    embed.set_thumbnail(url=ctx.guild.icon_url)
+                    embed.set_thumbnail(url=ctx.guild.icon.url)
                 except:
                     pass
                 if i == config['leaderboard_amount'] + 1:
@@ -62,7 +62,7 @@ class leaderboard(commands.Cog):
                     embed.add_field(name=f"#{i}: {x['name']}\n`{guild}`",
                                     value=f"Level: `{level}`\nTotal XP: `{xp}`\n", inline=True)
                     i += 1
-                    embed.set_thumbnail(url=ctx.guild.icon_url)
+                    embed.set_thumbnail(url=ctx.guild.icon.url)
                 except:
                     pass
                 if i == config['leaderboard_amount'] + 1:

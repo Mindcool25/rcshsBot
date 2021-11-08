@@ -62,7 +62,7 @@ class test(commands.Cog):
         embed.add_field(name="Roles for Levels:", value='`' + str(await roles) + '`')
         ignored_role = ignoredRole(guildID=ctx.guild.id)
         embed.add_field(name="Ignored Role:", value='`' + str(await ignored_role) + '`')
-        embed.set_thumbnail(url=ctx.guild.icon_url)
+        embed.set_thumbnail(url=ctx.guild.icon.url)
         await ctx.send(embed=embed)
 
     @commands.command()
