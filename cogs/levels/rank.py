@@ -56,7 +56,7 @@ class rank(commands.Cog):
                     next_level_xp=int(config['xp_per_level'] * 2 * ((1 / 2) * lvl)),
                     previous_level_xp=0,
                     xp_color=str(stats["xp_color"]),
-                    custom_background=str(stats["background"]),
+                    custom_background=stats["background"],
                     is_boosting=bool(member.premium_since),
                     circle_avatar=stats["circle"]
                 )

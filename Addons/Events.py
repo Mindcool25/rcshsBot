@@ -21,9 +21,6 @@ class Events(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-
-
-
 def setup(client):
     client.add_cog(Events(client))
 
@@ -38,7 +35,7 @@ def setup(client):
                 emoji = random.choice(config['reaction_emoji'])
                 embed = nextcord.Embed(description=f"**Click the selected emoji in the fastest time to win!**")
                 serverstats = levelling.find_one({"server": guild.id})
-                channel = nextcord.utils.get(guild.channels, name=serverstats["level_channel"])
+                channel = nextcord.utils.get(guild.channels, name="😝-fun")
                 if channel is None:
                     continue
                 message = await channel.send(embed=embed)
@@ -65,18 +62,6 @@ def setup(client):
                     stats = levelling.find_one({"guildid": guild.id, "id": user.id})
                     xp = stats['xp']
                     levelling.update_one({"guildid": guild.id, "id": user.id}, {"$set": {"xp": xp + config['reaction_xp']}})
-                    if os.path.exists("Addons/Clan System.py") is True:
-                        clan_search = levelling.find_one({"guildid": guild.id, "users": str(f"{user}")})
-                        if clan_search:
-                            levelling.update_one({"guildid": guild.id, "clan_name": clan_search['clan_name']},
-                                                 {"$set": {"total_xp": clan_search['total_xp'] + config['reaction_xp']}})
-                            for x in clan_search['users']:
-                                if x == str(user):
-                                    continue
-                                elif x != str(user):
-                                    stats = levelling.find_one({"guildid": guild.id, "name": x})
-                                    levelling.update_one({"guildid": guild.id, "name": x}, {"$set": {
-                                        "xp": stats['xp'] + config['reaction_xp'] / 2}})
 
                     for x in config['reaction_emoji']:
                         await message.remove_reaction(x, client.user)
@@ -86,7 +71,6 @@ def setup(client):
                     await message.edit(embed=nextcord.Embed(
                         description=f"*No one clicked the* `{emoji}` emoji!"))
                     await asyncio.sleep(5)
-                    await message.delete()
 
             elif event == "unscramble":
                 word = random.choice(config['word_list'])
@@ -99,7 +83,7 @@ def setup(client):
                     word = word.lower()
                 embed = nextcord.Embed(description=f"**Unscramble the word in the fastest time to win!**")
                 serverstats = levelling.find_one({"server": guild.id})
-                channel = nextcord.utils.get(guild.channels, name=serverstats["level_channel"])
+                channel = nextcord.utils.get(guild.channels, name="😝-fun")
                 if channel is None:
                     continue
                 message = await channel.send(embed=embed)
@@ -133,25 +117,10 @@ def setup(client):
                     levelling.update_one({"guildid": guild.id, "id": int("{.author.id}".format(user))},
                                          {"$set": {"xp": xp + config['unscramble_xp']}})
 
-                    if os.path.exists("Addons/Clan System.py") is True:
-                        clan_search = levelling.find_one({"guildid": guild.id, "users": str("{.author}".format(user))})
-                        if clan_search:
-                            levelling.update_one({"guildid": guild.id, "clan_name": clan_search['clan_name']},
-                                                 {"$set": {
-                                                     "total_xp": clan_search['total_xp'] + config['unscramble_xp']}})
-                            for x in clan_search['users']:
-                                if x == str("{.author}".format(user)):
-                                    continue
-                                elif x != str("{.author}".format(user)):
-                                    stats = levelling.find_one({"guildid": guild.id, "name": x})
-                                    levelling.update_one({"guildid": guild.id, "name": x}, {"$set": {
-                                        "xp": stats['xp'] + config['unscramble_xp'] / 2}})
-
                 except asyncio.TimeoutError:
                     await message.edit(embed=nextcord.Embed(
                         description=f"*No one got it right! The word was* `{word}!`"))
                     await asyncio.sleep(10)
-                    await message.delete()
 
             elif event == "maths":
                 maths_1 = random.randint(100, 200)
@@ -159,18 +128,25 @@ def setup(client):
                 maths_type = random.choice(config['operators'])
                 equation = f"{maths_1}{maths_type}{maths_2}"
                 answer = (round(eval(equation)))
+                
                 embed = nextcord.Embed(description=f"**Solve the equation in the fastest time to win!**")
+                
                 serverstats = levelling.find_one({"server": guild.id})
-                channel = nextcord.utils.get(guild.channels, name=serverstats['level_channel'])
+                channel = nextcord.utils.get(guild.channels, name="😝-fun")
+                
                 if channel is None:
                     continue
+                
                 message = await channel.send(embed=embed)
                 await asyncio.sleep(4)
+                
                 for i in reversed(range(1, 4)):
                     await message.edit(embed=nextcord.Embed(description=str(f"**{i}**")))
                     await asyncio.sleep(1)
+                
                 await message.edit(
                     embed=nextcord.Embed(description=f"**SOLVE:** `{maths_1} {maths_type} {maths_2}` **NOW!**"))
+                
                 start = time.perf_counter()
 
                 def check(m):
@@ -192,23 +168,10 @@ def setup(client):
                     levelling.update_one({"guildid": guild.id, "id": int("{.author.id}".format(user))},
                                          {"$set": {"xp": xp + config['maths_xp']}})
 
-                    if os.path.exists("Addons/Clan System.py") is True:
-                        clan_search = levelling.find_one({"guildid": guild.id, "users": str("{.author}".format(user))})
-                        if clan_search:
-                            levelling.update_one({"guildid": guild.id, "clan_name": clan_search['clan_name']},
-                                                 {"$set": {"total_xp": clan_search['total_xp'] + config['maths_xp']}})
-                            for x in clan_search['users']:
-                                if x == str("{.author}".format(user)):
-                                    continue
-                                elif x != str("{.author}".format(user)):
-                                    stats = levelling.find_one({"guildid": guild.id, "name": x})
-                                    levelling.update_one({"guildid": guild.id, "name": x}, {"$set": {
-                                        "xp": stats['xp'] + config['maths_xp'] / 2}})
                 except asyncio.TimeoutError:
                     await message.edit(embed=nextcord.Embed(
                         description=f"*No one got it right! The answer was* `{equation} = {answer}`"))
                     await asyncio.sleep(10)
-                    await message.delete()
 
     e.start()
 

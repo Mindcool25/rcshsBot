@@ -1,7 +1,9 @@
 import nextcord
 from nextcord.ext import commands
+from pymongo import DESCENDING
 from ruamel.yaml import YAML
 from Systems.levelsys import levelling
+from cogs.levels.levelchannel import levelchannel
 
 # Reads the config file, no need for changing.
 yaml = YAML()
@@ -19,34 +21,53 @@ class role(commands.Cog):
     @commands.command()
     @commands.has_permissions(administrator=True)
     @commands.guild_only()
-    async def role(self, ctx, addorremove=None, level=None, *, role_name=None):
+    async def role(self, ctx, addorremove=None, level=None, *, role: nextcord.Role = None):
         if addorremove is None:
             embed = nextcord.Embed(title=":x: There was an Error!", description=f"`{prefix}role <add|remove> <level> <role>`")
             await ctx.send(embed=embed)
             return
+        
         if level is None:
             embed = nextcord.Embed(title=":x: There was an Error!", description=f"`{prefix}role <add|remove> <level> <role>`")
             await ctx.send(embed=embed)
             return
-        if role_name is None:
+        
+        if role is None:
             embed = nextcord.Embed(title=":x: There was an Error!", description=f"`{prefix}role <add|remove> <level> <role>`")
             await ctx.send(embed=embed)
             return
+        
         if addorremove.lower() == "add":
             if level:
-                if role_name:
-                    levelling.update({"server": ctx.guild.id},
-                                     {"$push": {"level": level, "role": role_name}})
-                    embed = nextcord.Embed(title="✅ Role Added!", description=f"Added Role `{role_name}` to be unlocked at Level `{level}`")
+                serverstats = levelling.find_one({"server": ctx.guild.id})
+                if role in ctx.guild.roles:
+                    if role.name in serverstats['role']:
+                        embed = nextcord.Embed(title=":x: That role can already be unlocked", description=f"`{prefix}role <add|remove> <level> <role>")
+                        await ctx.send(embed=embed)
+                        return
+                
+                    else:
+                        levelling.update_one({"server": ctx.guild.id}, {"$push": {"role": role.name, "level": level}})
+                        embed = nextcord.Embed(title=f":white_check_mark: Added `{role.name}` to unlock at Level `{level}`")
+                        await ctx.send(embed=embed)
+                        return
+        
+                else:
+                    embed = nextcord.Embed(title=":x: That role doesnot exist", description=f"`{prefix}role <add|remove> <level> <role>`")
                     await ctx.send(embed=embed)
+                    return
+        
         if addorremove.lower() == "remove":
-            if level:
-                if role_name:
-                    levelling.update({"server": ctx.guild.id},
-                                     {"$pull": {"level": level, "role": role_name}})
-                    embed = nextcord.Embed(title="✅ Role Removed!", description=f"Removed Role `{role_name}` from unlocking at Level `{level}`")
-                    await ctx.send(embed=embed)
-
+            serverstats = levelling.find_one({"server": ctx.guild.id})
+            if role.name in serverstats['role']:
+                levelling.update_one({"server": ctx.guild.id}, {"$pull": {"role": role.name, "level": level}})
+                embed = nextcord.Embed(title=f":white_check_mark: Removed `{role.name}` from unlocking at Level `{level}`")
+                await ctx.send(embed=embed)
+                return
+            else:
+                embed = nextcord.Embed(title=":x: That role cannot be unlocked!")
+                await ctx.send(embed=embed)
+                return
 
     @commands.command()
     @commands.guild_only()

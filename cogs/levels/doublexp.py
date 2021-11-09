@@ -18,25 +18,21 @@ class doublexp(commands.Cog):
     @commands.command()
     @commands.has_permissions(administrator=True)
     @commands.guild_only()
-    async def doublexp(self, ctx, *, role=None):
+    async def doublexp(self, ctx, *, role: nextcord.Role = None):
         stats = levelling.find_one({"server": ctx.guild.id})
         if stats is None:
             newserver = {"server": ctx.guild.id, "double_xp_role": " "}
             levelling.insert_one(newserver)
+        
+        if role is None:
+            embed = nextcord.Embed(description=":x: You need to specify a role!")
+            await ctx.send(embed=embed)
+            return
+        
         else:
-            if role is None:
-                prefix = config['Prefix']
-                embed2 = nextcord.Embed(title=f":x: SETUP FAILED",
-                                       description=f"You need to enter a role name!",
-                                       color=config['error_embed_color'])
-                embed2.add_field(name="Example:", value=f"`{prefix}doublexp <rolename>`")
-                await ctx.send(embed=embed2)
-            elif role:
-                levelling.update_one({"server": ctx.guild.id}, {"$set": {"double_xp_role": role}})
-                embed = nextcord.Embed(title=f":white_check_mark: DOUBLE XP ROLE!", description=f"The new Double XP Role: `{role}`",
-                                      color=config['success_embed_color'])
-                await ctx.send(embed=embed)
-
+            levelling.update_one({"server": ctx.guild.id}, {"$set": {"double_xp_role": role}})
+            embed = nextcord.Embed(description=f":white_check_mark: The double XP role has been st to `{role}`")
+            await ctx.send(embed=embed)
 
 # Sets-up the cog for help
 def setup(client):

@@ -18,26 +18,21 @@ class levelchannel(commands.Cog):
     @commands.command()
     @commands.has_permissions(administrator=True)
     @commands.guild_only()
-    async def levelchannel(self, ctx, channel=None):
+    async def levelchannel(self, ctx, channel: nextcord.TextChannel = None):
         stats = levelling.find_one({"server": ctx.guild.id})
         if stats is None:
             newserver = {"server": ctx.guild.id, "level_channel": " "}
             levelling.insert_one(newserver)
+        
+        if channel is None:
+            embed = nextcord.Embed(description=":x: You must mention a channel!")
+            await ctx.send(embed=embed)
+            return
+        
         else:
-            if channel is None:
-                prefix = config['Prefix']
-                embed2 = nextcord.Embed(title=f":x: SETUP FAILED",
-                                       description=f"You need to enter a channel name!",
-                                       color=config['error_embed_color'])
-                embed2.add_field(name="Example:", value=f"`{prefix}levelchannel <channelname>`\n\n*** Please do not use the # and enter any -'s! ({prefix}levelchannel test-channel)***")
-                await ctx.send(embed=embed2)
-            elif channel:
-                levelling.update_one({"server": ctx.guild.id}, {"$set": {"level_channel": channel}})
-                embed = nextcord.Embed(title=f":white_check_mark: LEVEL CHANNEL",
-                                      description=f"The new level channel is: `{channel}`",
-                                      color=config['success_embed_color'])
-                await ctx.send(embed=embed)
-
+            levelling.update_one({"server": ctx.guild.id}, {"$set": {"level_channel": channel.name}})
+            embed = nextcord.Embed(description=f":white_check_mark: Level channel set to {channel}")
+            await ctx.send(embed=embed)
 
 # Sets-up the cog for help
 def setup(client):

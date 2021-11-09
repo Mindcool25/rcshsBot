@@ -11,7 +11,7 @@ with open("Configs/config.yml", "r", encoding="utf-8") as file:
 
 
 # Spam system class
-class test(commands.Cog):
+class config(commands.Cog):
     def __init__(self, client):
         self.client = client
 
@@ -100,4 +100,4 @@ class test(commands.Cog):
 
 # Sets-up the cog for help
 def setup(client):
-    client.add_cog(test(client))
+    client.add_cog(config(client))

@@ -9,12 +9,6 @@ from ruamel.yaml import YAML
 from Libs.pretty_help import PrettyHelp, DefaultMenu
 from Systems.levelsys import levelling
 
-# Welcome and Rules channel link
-WELCOME_MESSAGE_ID  = 846940613478973453
-RULES_CHANNEL       = 848980735754240040
-
-antispam = False
-
 yaml = YAML()
 with open("Configs/config.yml", "r", encoding="utf-8") as file:
     config = yaml.load(file)
@@ -64,12 +58,13 @@ if __name__ == "__main__":
             bot.load_extension(f"cogs.levels.{fn[:-3]}")
             print(f"Loading cogs.levels.{fn[:-3]}")
     
+    for fn in listdir("Addons"):
+        if fn.endswith(".py"):
+            bot.load_extension(f"Addons.{fn[:-3]}")
+            print(f"Loading Addons.{fn[:-3]}")
+
     bot.load_extension("Systems.levelsys")
     print("Loading Systems.levelsys")
-
-    if antispam is True:
-        bot.load_extension("Systems.Antispam")
-        print("Loading Systems.Antispam")
 
 print("Loaded extensions")
 
@@ -101,8 +96,8 @@ async def on_ready():
 @bot.event
 async def on_member_join(member):
     try:
-        channel = bot.get_channel(WELCOME_MESSAGE_ID)
-        rules   = bot.get_channel(RULES_CHANNEL)
+        channel = bot.get_channel(config['WELCOME_CHANNEL_ID'])
+        rules   = bot.get_channel(config['RULES_CHANNEL'])
         try:
             value=f"Welcome {member.mention} to {member.guild.name}' Discord server! Check out our rules over at {rules.mention} and have a nice stay!"
             await channel.send(value)
