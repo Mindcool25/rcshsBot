@@ -51,7 +51,7 @@ class seasonsys(commands.Cog):
                             
                             embed = nextcord.Embed(title=":jack_o_lantern: // **Spook Season**",
                                                   description=f"Trick or Treat? Word has it, <@{self.client.user.id}> has the best treats at `🏚️ House #{house_number}`",
-                                                  colour=0xF75F1C)
+                                                  color=0xF75F1C)
                             embed.add_field(name=":candy: Treat: ",
                                             value=f"`x{config['bonus_xp']}xp until 1st of November, {datetime.today().year}`")
                             
@@ -71,7 +71,7 @@ class seasonsys(commands.Cog):
                 else:
                     embed = nextcord.Embed(title=":jack_o_lantern: **Halloween Scares are over!**",
                                           description=f"The Spooky season is over.. We hope you had a great Spooktober filled with scares!\n\n:candy: The **Treat** `x{config['bonus_xp']}xp` has been reverted.",
-                                          colour=0xF75F1C)
+                                          color=0xF75F1C)
                     
                     levelling.update_one({"bot_name": self.client.user.name}, {"$set": {"event_state": False}})
                     
@@ -96,7 +96,7 @@ class seasonsys(commands.Cog):
                             
                             embed = nextcord.Embed(title=":christmas_tree: // **Christmas Holiday**",
                                                   description=f"Tis the season to be jolly! <@{self.client.user.id}> spreads Christmas cheer to all!",
-                                                  colour=0x0F7833)
+                                                  color=0x0F7833)
                             embed.add_field(name=":gift: Present: ",
                                             value=f"`x{config['bonus_xp']}xp until 1st of January, {datetime.today().year + 1}`")
                             
@@ -117,7 +117,7 @@ class seasonsys(commands.Cog):
                     levelling.update_one({"bot_name": self.client.user.name}, {"$set": {"event_state": False}})
                     embed = nextcord.Embed(title=":christmas_tree: **Christmas Holiday Over!**",
                                           description=f"The Christmas season is over.. We hope you had a great holiday full of joy!\n\n:gift: The **Present** `x{config['bonus_xp']}xp` has been reverted.",
-                                          colour=0x0F7833)
+                                          color=0x0F7833)
                     
                     for guild in active_servers:
                         serverstats = levelling.find_one({"server": guild.id})
@@ -140,7 +140,7 @@ class seasonsys(commands.Cog):
                             
                             embed = nextcord.Embed(title=":rabbit: // **Easter Holiday**",
                                                   description=f"The Egg Hunt begins, <@{self.client.user.id}> has hidden Eggs all around your garden!",
-                                                  colour=0xee82ee)
+                                                  color=0xee82ee)
                             embed.add_field(name=":egg: Easter Egg Gift: ",
                                             value=f"`x{config['bonus_xp']}xp until 1st of March, {datetime.today().year}`")
                             
@@ -160,7 +160,7 @@ class seasonsys(commands.Cog):
                     levelling.update_one({"bot_name": self.client.user.name}, {"$set": {"event_state": False}})
                     embed = nextcord.Embed(title=":rabbit: **Egg Hunt Over!**",
                                           description=f"Looks like all the eggs were found.. We hope you had a great Easter!\n\n:egg: The **Easter Egg Gift** `x{config['bonus_xp']}xp` has been reverted.",
-                                          colour=0xee82ee)
+                                          color=0xee82ee)
 
                     for guild in active_servers:
                         serverstats = levelling.find_one({"server": guild.id})
@@ -181,7 +181,7 @@ class seasonsys(commands.Cog):
                             
                             embed = nextcord.Embed(title=":beach: // **Summer Holiday**",
                                                   description=f"High tide or low tide, <@{self.client.user.id}> will stay by your side",
-                                                  colour=0xFFFE6F)
+                                                  color=0xFFFE6F)
                             embed.add_field(name=":icecream: Gift: ",
                                             value=f"`x{config['bonus_xp']}xp until 1st of September, {datetime.today().year}`")
                             
@@ -202,7 +202,7 @@ class seasonsys(commands.Cog):
                     
                     embed = nextcord.Embed(title=":rabbit: **Egg Hunt Over!**",
                                           description=f"Looks like all the eggs were found.. We hope you had a great Easter!\n\n:egg: The **Easter Egg Gift** `x{config['bonus_xp']}xp` has been reverted.",
-                                          colour=0xee82ee)
+                                          color=0xee82ee)
                     
                     for guild in active_servers:
                         serverstats = levelling.find_one({"server": guild.id})
@@ -230,7 +230,7 @@ class seasonsys(commands.Cog):
                             else:
                                 embed = nextcord.Embed(title="☃️ MERRY CHRISTMAS!",
                                                       description=f"{self.client.user.mention} wishes you all a Merry Christmas!",
-                                                      colour=0x0F7833)
+                                                      color=0x0F7833)
                                 await channel.send(embed=embed)
                         
                         elif not stats:
@@ -252,7 +252,7 @@ class seasonsys(commands.Cog):
                             else:
                                 embed = nextcord.Embed(title="🐰 HAPPY EASTER!",
                                                       description=f"{self.client.user.mention} wishes you all a Happy Easter!",
-                                                      colour=0xee82ee)
+                                                      color=0xee82ee)
                                 await channel.send(embed=embed)
                         
                         elif not stats:
@@ -274,7 +274,7 @@ class seasonsys(commands.Cog):
                             else:
                                 embed = nextcord.Embed(title="🎃 HAPPY HALLOWEEN!",
                                                       description=f"{self.client.user.mention} wishes you all a Scary Halloween full of goods!",
-                                                      colour=0xF75F1C)
+                                                      color=0xF75F1C)
                                 await channel.send(embed=embed)
                     
                         elif not stats:
@@ -296,7 +296,7 @@ class seasonsys(commands.Cog):
                             else:
                                 embed = nextcord.Embed(title="🏖️ SUMMER TIME!",
                                                       description=f"{self.client.user.mention} wishes you all a Warm Summer!",
-                                                      colour=0xFFFE6F)
+                                                      color=0xFFFE6F)
                                 await channel.send(embed=embed)
             
                         elif not stats:
@@ -331,7 +331,7 @@ class seasonsys(commands.Cog):
         
             christmas_embed = nextcord.Embed(title="🎅 CHRISTMAS COUNTDOWN!",
                                             description=f"The Christmas season is coming, so to get into the spirit, here's a Christmas Countdown.",
-                                            colour=0xc54245)
+                                            color=0xc54245)
             christmas_embed.add_field(name="Days:", value=f"`{days}`", inline=True)
             christmas_embed.add_field(name="Hours:", value=f"`{strHours}`", inline=True)
             christmas_embed.add_field(name="Minutes:", value=f"`{strMinutes}`", inline=True)
@@ -358,7 +358,7 @@ class seasonsys(commands.Cog):
         
             halloween_embed = nextcord.Embed(title="🎃 HALLOWEEN COUNTDOWN!",
                                             description=f"The Spooky season season is coming, so to begin the scares, here's a Halloween Countdown.",
-                                            colour=0xeb6123)
+                                            color=0xeb6123)
             halloween_embed.add_field(name="Days:", value=f"`{days}`", inline=True)
             halloween_embed.add_field(name="Hours:", value=f"`{strHours}`", inline=True)
             halloween_embed.add_field(name="Minutes:", value=f"`{strMinutes}`", inline=True)
@@ -383,7 +383,7 @@ class seasonsys(commands.Cog):
             strSeconds = str(secs)
             easter_embed = nextcord.Embed(title="🐰 EASTER COUNTDOWN!",
                                          description=f"The Egg Hunts begin soon! For the mean time, here's an Easter Countdown.",
-                                         colour=0xe9aad1)
+                                         color=0xe9aad1)
             easter_embed.add_field(name="Days:", value=f"`{days}`", inline=True)
             easter_embed.add_field(name="Hours:", value=f"`{strHours}`", inline=True)
             easter_embed.add_field(name="Minutes:", value=f"`{strMinutes}`", inline=True)
