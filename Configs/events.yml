@@ -3,7 +3,7 @@
 # ======================================================================================
 
 # How long an event should be sent to servers (Note: Value is calculated by minutes)
-time: 0.2
+time: 5
 
 # ======================================================================================
 #                                 REACTION EVENT
@@ -16,7 +16,7 @@ reaction_emoji: [⬜, 🟥, 🟧, 🟦, 🟩]
 reaction_xp: 50
 
 # How long the event lasts (In seconds - If no one completes the event, it will automatically end)
-reaction_event_length: 10
+reaction_event_length: 120
 
 
 # ======================================================================================
@@ -24,13 +24,13 @@ reaction_event_length: 10
 # ======================================================================================
 
 # The word list the bot will pick from (want random words? go to: https://www.randomlists.com/random-words and then go to https://arraythis.com/ to easily turn the words into an array)
-word_list: ["Ghost", "Haunted House", "Haunting", "Paranormal", "Phantom", "Possessed", "Spirit", "Witch", "Pumpkin", "Spider", "Web", "Trick or treat", "Evil", "Grave", "Satan", "Bat", "Skull", "Zombie", "Hound", "Demon"]
+word_list: ["Ghost", "Haunted House", "Haunting", "Paranormal", "Phantom", "Possessed", "Spirit", "Witch", "Pumpkin", "Spider", "Web", "Trick or treat", "Evil", "Grave", "Satan", "Bat", "Skull", "Zombie", "Hound", "Demon", "accessible", "strange", "lumpy", "explain", "wide-eyed", "rainy", "frogs", "frame", "labored", "pretty", "nasty", "replace", "wet", "branch", "numberless", "scribble", "argument", "bite-sized", "concentrate", "serious", "merciful", "flashy", "jar", "outgoing", "government"]
 
 # How much XP will the winner earn
 unscramble_xp: 150
 
 # How long the event lasts (In seconds - If no one completes the event, it will automatically end)
-unscramble_event_length: 25
+unscramble_event_length: 120
 
 # If the event should check if the message is case-sensitive or not (e.g If true and word is Test, user has to enter Tree exactly - If false and word is Test, user can enter for examples: Test, test, tEsT, TeSt, etc)
 case_sensitive: False
@@ -46,4 +46,4 @@ maths_xp: 100
 operators: [+, -]
 
 # How long the event lasts (In seconds - If no one completes the event, it will automatically end)
-maths_event_length: 15
+maths_event_length: 120

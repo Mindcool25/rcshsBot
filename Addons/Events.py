@@ -25,7 +25,7 @@ def setup(client):
     client.add_cog(Events(client))
 
 
-    @tasks.loop(minutes=int(config['time']))
+    @tasks.loop(minutes=int(random.randint(1, 10)))
     async def e():
         activeservers = client.guilds
         for guild in activeservers:
@@ -159,10 +159,12 @@ def setup(client):
                         check=check,
                         timeout=config['maths_event_length'])
                     end = time.perf_counter()
+                    
                     await user.add_reaction("✅")
                     await message.edit(embed=nextcord.Embed(
                         description="**{.author}** ".format(
                             user) + f" Solved `{equation} = {answer}` in `{end - start:.3f}` seconds and earned `{config['maths_xp']}xp`!"))
+                    
                     stats = levelling.find_one({"guildid": guild.id, "id": int("{.author.id}".format(user))})
                     xp = stats['xp']
                     levelling.update_one({"guildid": guild.id, "id": int("{.author.id}".format(user))},
