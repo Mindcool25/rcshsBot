@@ -25,7 +25,7 @@ def setup(client):
     client.add_cog(Events(client))
 
 
-    @tasks.loop(minutes=int(random.randint(1, 10)))
+    @tasks.loop(minutes=int(config['time']))
     async def e():
         activeservers = client.guilds
         for guild in activeservers:

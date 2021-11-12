@@ -3,7 +3,7 @@
 # ======================================================================================
 
 # How long an event should be sent to servers (Note: Value is calculated by minutes)
-time: 5
+time: 4
 
 # ======================================================================================
 #                                 REACTION EVENT

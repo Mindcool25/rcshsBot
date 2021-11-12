@@ -96,8 +96,8 @@ async def on_ready():
 @bot.event
 async def on_member_join(member):
     try:
-        channel = bot.get_channel(config['WELCOME_CHANNEL_ID'])
-        rules   = bot.get_channel(config['RULES_CHANNEL'])
+        channel = bot.get_channel(int(config['WELCOME_CHANNEL_ID']))
+        rules   = bot.get_channel(int(config['RULES_CHANNEL']))
         try:
             value=f"Welcome {member.mention} to {member.guild.name}' Discord server! Check out our rules over at {rules.mention} and have a nice stay!"
             await channel.send(value)
