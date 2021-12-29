@@ -24,7 +24,7 @@ reaction_event_length: 120
 # ======================================================================================
 
 # The word list the bot will pick from (want random words? go to: https://www.randomlists.com/random-words and then go to https://arraythis.com/ to easily turn the words into an array)
-word_list: ["Ghost", "Haunted House", "Haunting", "Paranormal", "Phantom", "Possessed", "Spirit", "Witch", "Pumpkin", "Spider", "Web", "Trick or treat", "Evil", "Grave", "Satan", "Bat", "Skull", "Zombie", "Hound", "Demon", "accessible", "strange", "lumpy", "explain", "wide-eyed", "rainy", "frogs", "frame", "labored", "pretty", "nasty", "replace", "wet", "branch", "numberless", "scribble", "argument", "bite-sized", "concentrate", "serious", "merciful", "flashy", "jar", "outgoing", "government"]
+word_list: ["Ghost", "Haunting", "Paranormal", "Phantom", "Possessed", "Spirit", "Witch", "Pumpkin", "Spider", "Web", "Evil", "Grave", "Satan", "Bat", "Skull", "Zombie", "Hound", "Demon", "accessible", "strange", "lumpy", "explain", "wide-eyed", "rainy", "frogs", "frame", "labored", "pretty", "nasty", "replace", "wet", "branch", "numberless", "scribble", "argument", "bite-sized", "concentrate", "serious", "merciful", "flashy", "jar", "outgoing", "government"]
 
 # How much XP will the winner earn
 unscramble_xp: 150
